@@ -40,7 +40,9 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 2. 關閉遊戲，執行 `install.bat`：建置後安裝到遊戲的 `Mods\` 與 `UserData\ZhHant\`。移除用 `uninstall.bat`。
    - 遊戲不在 Steam 預設位置時，加上 `--game "遊戲資料夾"`。
    - 手寫字型：把支援繁體的 .ttf／.otf 放在 `fonts/handwritten.ttf`，或加上 `--font 字型檔`。
+   - 除錯模式：加上 `--debug`，會記錄後備轉換（`UserData\ZhHant\misses.tsv`）、每分鐘統計，並做缺翻自我測試。
 3. 只建置、不安裝：`python tools/install.py build`。
+4. 打包發布用的壓縮檔：`python tools/package.py`。發布版附的手寫字型是霞鶩文楷 TC，放在 `fonts/handwritten.ttf`，授權檔放在 `fonts/handwritten.LICENSE.txt`。
 
 ## 已知衝突
 

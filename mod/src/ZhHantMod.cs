@@ -15,7 +15,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-[assembly: MelonInfo(typeof(ProbablyStolenZhHant.ZhHantMod), "Probably Stolen 繁體中文", "0.2.0", "dbfoxtw")]
+[assembly: MelonInfo(typeof(ProbablyStolenZhHant.ZhHantMod), "Probably Stolen 繁體中文", "1.0.0", "dbfoxtw")]
 [assembly: MelonGame("Questing Goose Studio", "Probably Stolen")]
 [assembly: HarmonyDontPatchAll] // 轉換資料載入後才手動掛上攔截
 
@@ -33,18 +33,21 @@ namespace ProbablyStolenZhHant
         string _dataDir;
         float _nextReport = 60f;
         bool _fontFallbackDone;
+        /// <summary>UserData\ZhHant\debug 存在時開啟：記錄後備轉換（misses.tsv）、每分鐘統計、缺翻自我測試。發布版沒有這個檔。</summary>
+        static bool _debug;
 
         public override void OnInitializeMelon()
         {
             Log = LoggerInstance;
             _dataDir = Path.Combine(MelonEnvironment.UserDataDirectory, "ZhHant");
+            _debug = File.Exists(Path.Combine(_dataDir, "debug"));
             var sw = Stopwatch.StartNew();
             Tr = Translator.Load(_dataDir);
             // 字串表載入前先用暫用轉換器（只有 OpenCC＋術語表），並記下轉過的字，載入後重新轉換
             Conv = TextConverter.Build(Tr, Array.Empty<(string, string, string)>(), Path.Combine(_dataDir, "hardcoded.tsv"));
             Conv.Produced = new Dictionary<string, string>(StringComparer.Ordinal);
             Log.Msg($"載入翻譯資料：OpenCC {Tr.OpenCCEntries} 詞、術語 {Tr.TermCount}、逐條修正 {Tr.OverrideCount}、" +
-                    $"缺翻補譯文 {Tr.Fills.Count} 條＋參照字串表 {Tr.FillRefCount} 條（{sw.ElapsedMilliseconds} ms）");
+                    $"缺翻補譯文 {Tr.Fills.Count} 條＋參照字串表 {Tr.FillRefCount} 條（{sw.ElapsedMilliseconds} ms）{(_debug ? "；除錯模式" : "")}");
 
             var prefix = new HarmonyMethod(typeof(ZhHantMod).GetMethod(nameof(FirstArgPrefix), BindingFlags.Static | BindingFlags.NonPublic));
             int patched = 0;
@@ -193,7 +196,7 @@ namespace ProbablyStolenZhHant
             }
             var conv = TextConverter.Build(Tr, entries, Path.Combine(_dataDir, "hardcoded.tsv"));
             conv.ChineseActive = Conv.ChineseActive;
-            conv.LoadMisses(Path.Combine(_dataDir, "misses.tsv")); // 跨次累積
+            if (_debug) conv.LoadMisses(Path.Combine(_dataDir, "misses.tsv")); // 跨次累積
             var early = Conv;
             Conv = conv;
             _tables = TableState.Done;
@@ -304,7 +307,7 @@ namespace ProbablyStolenZhHant
                 bool zh = code != null && code.StartsWith("zh", StringComparison.Ordinal);
                 if (zh != Conv.ChineseActive) Log.Msg($"目前語言：{code}（{(zh ? "翻譯" : "不翻譯")}寫死的英文）");
                 Conv.ChineseActive = zh;
-                if (zh && !_selfTested && _tables >= TableState.Done) // 參照型的缺翻補譯要等字串表載入
+                if (_debug && zh && !_selfTested && _tables >= TableState.Done) // 參照型的缺翻補譯要等字串表載入
                 {
                     _selfTested = true;
                     MissingTranslations.SelfTest(loc);
@@ -325,7 +328,7 @@ namespace ProbablyStolenZhHant
                 _nextLocaleCheck = Time.unscaledTime + 1f;
                 UpdateLocale();
             }
-            if (Time.unscaledTime < _nextReport) return;
+            if (!_debug || Time.unscaledTime < _nextReport) return;
             _nextReport = Time.unscaledTime + 60f;
             Report();
         }
@@ -335,7 +338,7 @@ namespace ProbablyStolenZhHant
         void Report()
         {
             Log.Msg(Conv.Stats() + $"；缺翻補譯文 {MissingTranslations.FillHits}、改用英文 {MissingTranslations.EnglishHits}");
-            if (_tables != TableState.Done) return; // 暫用轉換器的後備轉換不代表正式版會漏掉
+            if (!_debug || _tables != TableState.Done) return; // 暫用轉換器的後備轉換不代表正式版會漏掉
             try { Conv.WriteMisses(Path.Combine(_dataDir, "misses.tsv")); }
             catch (Exception e) { Log.Warning($"寫入 misses.tsv 失敗：{e.Message}"); }
         }
