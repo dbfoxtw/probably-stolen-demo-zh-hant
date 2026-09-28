@@ -9,3 +9,7 @@ Georgio will pay	Georgio will pay back with interest\.	喬治奧會連本帶利�
 
 # 錄音機裡玩家台詞的說話者（「Player: 台詞」；遊戲其他地方稱玩家為店主）
 Player	^Player$	店主
+
+# 刪除存檔等確認對話框的按鈕（寫死在介面上；字串表的 MainMenu/yes、no 是「是／否」，這裡一致）
+Yes	^Yes$	是
+No	^No$	否
