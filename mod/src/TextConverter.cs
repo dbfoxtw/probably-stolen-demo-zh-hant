@@ -22,6 +22,8 @@ namespace ProbablyStolenZhHant
         readonly HashSet<string> _keyPrefixes = new HashSet<string>(StringComparer.Ordinal);
         readonly List<Template> _templates = new List<Template>();
         readonly List<Template> _plainTemplates = new List<Template>(); // 字面沒有簡體專用字的樣板，見 ConvertCore
+        // 沒有簡體專用字、譯文卻不同的短詞（「[未激活]」「休班警官」「彩票」）：不用轉的文字裡也要換掉，見 ReplacePlainPhrases
+        readonly Dictionary<char, List<KeyValuePair<string, string>>> _plainPhrases = new Dictionary<char, List<KeyValuePair<string, string>>>();
         readonly Dictionary<char, List<KeyValuePair<string, string>>> _phrases = new Dictionary<char, List<KeyValuePair<string, string>>>();
         readonly bool[] _trigger = new bool[char.MaxValue + 1];
         readonly Dictionary<string, string> _cache = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -43,6 +45,7 @@ namespace ProbablyStolenZhHant
         public int TemplateCount => _templates.Count;
         public int TriggerCount { get; private set; }
         public int PhraseCount { get; private set; }
+        public int PlainPhraseCount { get; private set; }
         /// <summary>建立時翻譯的字串表條目數；同一句原文有兩種譯文、只能留一種的次數。</summary>
         public int EntryCount { get; private set; }
         public int Conflicts { get; private set; }
@@ -69,6 +72,7 @@ namespace ProbablyStolenZhHant
         {
             var c = new TextConverter(tr);
             var outChars = new HashSet<char>();
+            var outText = new StringBuilder(); // 全部譯文，用來確認短詞不會出現在已轉好的文字裡
             void Add(string s, string d)
             {
                 if (s == d && s.Length > 0 && s.Length <= MaxSpeaker) c._unchanged.Add(s);
@@ -81,11 +85,16 @@ namespace ProbablyStolenZhHant
                 var dst = tr.Translate(table, key, src);
                 c.EntryCount++;
                 foreach (var ch in dst) outChars.Add(ch);
+                outText.Append(dst).Append('\n');
                 Add(src, dst);
                 Add(StripAnimTags(src), StripAnimTags(dst));
             }
             foreach (var f in tr.Fills.Values)
+            {
                 foreach (var ch in f) outChars.Add(ch);
+                outText.Append(f).Append('\n');
+            }
+            var allOut = outText.ToString();
             Add("简体中文", "繁體中文"); // 語言選單（寫死在程式裡）
             Add("Simplified Chinese", "Traditional Chinese"); // 主選單右上角的語言下拉選單
 
@@ -108,6 +117,12 @@ namespace ProbablyStolenZhHant
                 {
                     AddByFirstChar(c._phrases, kv.Key, kv.Value);
                     c.PhraseCount++;
+                    // 「退出」「配置」這類原文也是正常的繁中詞、會出現在別的譯文裡，換掉會誤傷，所以只收譯文裡沒出現過的
+                    if (!c.NeedsConversion(kv.Key) && allOut.IndexOf(kv.Key, StringComparison.Ordinal) < 0)
+                    {
+                        AddByFirstChar(c._plainPhrases, kv.Key, kv.Value);
+                        c.PlainPhraseCount++;
+                    }
                 }
             }
             if (hardcodedPath != null && File.Exists(hardcodedPath))
@@ -118,8 +133,9 @@ namespace ProbablyStolenZhHant
                     if (p.Length >= 3 && p[0].Length > 0)
                         c._hardcoded.Add((p[0], new Regex(p[1], RegexOptions.CultureInvariant), p[2]));
                 }
-            foreach (var list in c._phrases.Values)
-                list.Sort((a, b) => b.Key.Length.CompareTo(a.Key.Length)); // 長詞優先
+            foreach (var d in new[] { c._phrases, c._plainPhrases })
+                foreach (var list in d.Values)
+                    list.Sort((a, b) => b.Key.Length.CompareTo(a.Key.Length)); // 長詞優先
             foreach (var kv in c._exact)
                 if (kv.Key.IndexOf('{') >= 0 && Template.TryCreate(kv.Key, kv.Value, out var t))
                     c._templates.Add(t);
@@ -157,6 +173,7 @@ namespace ProbablyStolenZhHant
                     // 樣板的字面沒有簡體專用字、填入的又是數字時，整句也沒有（「你下周的租金是{0}。」），仍要套樣板
                     foreach (var t in _plainTemplates)
                         if ((r = t.Apply(s, Convert)) != null) { TemplateHits++; return r; }
+                    if ((r = ReplacePlainPhrases(s)) != null) { FallbackHits++; return r; }
                     Skipped++;
                     return s;
                 }
@@ -234,8 +251,9 @@ namespace ProbablyStolenZhHant
             {
                 if (!NeedsConversion(tokens[units[u]]))
                 {
-                    // 沒有簡體專用字、但整句查得到的片段（聲望特性標題裡標籤包住的「[未激活]」→「[未啟用]」）
-                    if (LookupFlexible(tokens[units[u]], templates: false) is string ex) tokens[units[u]] = ex;
+                    // 沒有簡體專用字的片段：整句查得到，或含有譯文不同的短詞（聲望特性標題的「[未激活]」→「[未啟用]」）
+                    var ex = LookupFlexible(tokens[units[u]], templates: false) ?? ReplacePlainPhrases(tokens[units[u]]);
+                    if (ex != null) tokens[units[u]] = ex;
                     continue;
                 }
                 int last = CouldStartKey(tokens[units[u]]) ? Math.Min(u + MaxJoin, units.Count) - 1 : u;
@@ -380,6 +398,27 @@ namespace ProbablyStolenZhHant
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// 沒有簡體專用字的文字裡，換掉「沒有簡體專用字、譯文卻不同」的短詞（「[未激活]」「休班警官」）；一個都沒有時傳回 null。
+        /// 這些詞在繁中譯文裡不會出現（出現了就是還沒轉），所以已轉好的文字不受影響（離線驗證的「譯文不會被重複轉換」把關）。
+        /// </summary>
+        string ReplacePlainPhrases(string s)
+        {
+            if (_plainPhrases.Count == 0) return null;
+            StringBuilder sb = null;
+            int gap = 0, i = 0;
+            while (i < s.Length)
+            {
+                var hit = LongestMatch(_plainPhrases, s, i);
+                if (hit.Key == null) { i++; continue; }
+                if (sb == null) sb = new StringBuilder(s.Length);
+                sb.Append(s, gap, i - gap).Append(hit.Value);
+                i += hit.Key.Length;
+                gap = i;
+            }
+            return sb?.Append(s, gap, s.Length - gap).ToString();
         }
 
         /// <summary>後備轉換：標記原樣保留；其餘用短詞分詞，詞以外的部分用 OpenCC 轉換再套術語表。</summary>
