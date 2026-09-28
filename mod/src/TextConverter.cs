@@ -125,9 +125,10 @@ namespace ProbablyStolenZhHant
                     c._templates.Add(t);
             // 字面部分越長的樣板越具體，先比對（避免「…{0}…」把別的樣板的字面也吃進佔位符）
             c._templates.Sort((a, b) => b.LiteralLength.CompareTo(a.LiteralLength));
-            // 字面沒有簡體專用字、套用後字面卻會變的樣板（「你下周的租金是{0}。」→「下週」）另外列出，不用轉的字串也要比對
+            // 字面沒有簡體專用字、套用後字面卻會變的樣板（「你下周的租金是{0}。」→「下週」、「槽位{0}」→「欄位」）另外列出，
+            // 不用轉的字串也要比對。只收字面會變的，所以單邊的樣板套上去也只是換掉那個詞，不怕寬鬆
             foreach (var t in c._templates)
-                if (t.Anchored && !c.NeedsConversion(t.Literal) && !t.KeepsLiteral) c._plainTemplates.Add(t);
+                if (!c.NeedsConversion(t.Literal) && !t.KeepsLiteral) c._plainTemplates.Add(t);
             return c;
         }
 

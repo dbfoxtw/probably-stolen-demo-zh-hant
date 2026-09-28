@@ -226,6 +226,8 @@ Dialogue	dialog_upper_lower_visitor_luxury_2	724388827e9c9761	6	6	裡
 Dialogue	dialog_mentor_bargain_2	aa8721ffbde83359	6	8	
 Dialogue	dialog_bargain_innocent_blackmail_2	15d8448634ad3bfb	3	4	安
 Dialogue	dialog_georgio3_arrest_sec_1	30d877d9bc229d4e	15	17	澡堂
+Dialogue	dialog_power_maint_deal_2	0f16600f7fc3c507	14	15	顆
+Dialogue	dialog_power_maint_deal_3	2064fa3045a3c63e	4	5	顆
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
@@ -274,6 +276,7 @@ Item	item_ancient_alien_relics_flavor	dc4aaa8cc7b18a54	9	10		21	22
 Item	item_security_alarm_desc	e91b3bb66d86d05e	0	1		2	2	幅	6	9	遭
 Item	item_surgery_tool_name	5ef62f301ffb7fb7	6	8	組
 Item	item_postit_name	42820b4e9544d0b0	1	2	利貼
+Item	item_shampoo_name	df646f862a0d3dbf	5	8	沐浴乳
 MainMenu	credit_ack	6897086dc7b23030	2	3	感
 MainMenu	option_note	09fd54c28bcb1129	9	11	支援	13	16	螢幕	28	29	執
 MainMenu	option_apply	95514e5a7ff65783	0	1	套
@@ -418,9 +421,9 @@ UI	book_chem_p5_body	8843ddef6b31d7d3	13	14	查
 UI	ui_clientele_tooltip	86dde2bc3b8e52b0
 UI	ui_clientele_no_merch_detected	11a2d8fb51b4fa0d
 UI	book_wine_p2_body1	7ce26b0434dbcb52	44	45		46	47	幅
-UI	lottery_match3	1755f4587baaed43	4	4	碼
-UI	lottery_match4	44fce9e933724392	4	4	碼
-UI	lottery_match5	3e71afef1cc3a2af	4	4	碼
+UI	lottery_match3	1755f4587baaed43	1	2	3	3	4	
+UI	lottery_match4	44fce9e933724392	1	2	4	3	4	
+UI	lottery_match5	3e71afef1cc3a2af	1	2	5	3	4	
 UI	ins_stamp_incorrect_logo_missing	54be07dd99745fc8	2	2	沒有	4	6	
 UI	ins_stamp_chip_intro	e140b31d549559b1	15	15	沒有	17	19		20	20	晶片
 UI	ins_inj_label_issues_sub	33fed6e81a863184	2	2	沒有	4	6	
