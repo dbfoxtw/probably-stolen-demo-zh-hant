@@ -43,7 +43,7 @@ Dialogue	dialog_food_buyer_offer_5	7693d650ea32f80c	4	6	一塊當	7	8	塊	18	19	
 Dialogue	dialog_janitor_intro_4	ba3996507f2860ff	6	8	一帶
 Dialogue	dialog_janitor_ue_1	115bb719bad4cc2a	9	10	地方
 Dialogue	dialog_off_duty_officer_2	473ab504463540f0	0	1	洋芋
-Dialogue	dialog_inventor_accept_6	ad06d9be85269c15	1	1	頭
+Dialogue	dialog_inventor_accept_6	ad06d9be85269c15	0	1	改天
 Dialogue	dialog_minor_patrol_5	7c6b0e0ad498ae96	0	1	什麼
 Dialogue	dialog_minor_merc_3	9bd45ccae619b3c0	9	10	家
 Dialogue	dialog_minor_merc_5	89eaabab9040d0f2	9	10	
@@ -52,7 +52,7 @@ Dialogue	dialog_minor_conspiracy_5	983fc5274e16017d	9	10	我
 Dialogue	dialog_minor_ul_servant_6	e313e9f48f7fff92	8	8	道	9	10	
 Dialogue	dialog_info_shady_line2_4	ee4f118ec9afd6ca	0	2	說不定
 Dialogue	dialog_morning_hitman_1	26615c8c31741d23	3	4	託
-Dialogue	dialog_deal_done_12	cbe12df39475f6aa	4	4	頭
+Dialogue	dialog_deal_done_12	cbe12df39475f6aa	3	4	改天
 Dialogue	dialog_util_shutter_3	e257db82f65ae6c9	3	6	禮貌
 Dialogue	dialog_arrest_client_5	fc21e49fc5a15d2e	1	2	什麼
 Dialogue	dialog_wild_network_2	94d48ea6d0b4cc4e	0	1	我
@@ -98,7 +98,7 @@ Dialogue	dialog_power_ll_greeting_2	edf9e892eafc9e18	4	6	可	7	9	嚴重
 Dialogue	dialog_power_ll_greeting_3	81e80f9511346ac5	10	11	說
 Dialogue	dialog_tourist_weapon_deal_5	9e1110c781578509	10	13	猛
 Dialogue	dialog_network_intro_5	030b4a0219294157	5	5	價	6	10	談得攏	11	12	一切	13	16	好說
-Dialogue	dialog_sec_wanted_intro_10	fe7b494bc505d567	0	4		5	6	定	9	10	本人	11	13	
+Dialogue	dialog_sec_wanted_intro_10	6945eb74869e2396	0	4		5	6	定	9	10	本人	11	13	
 Dialogue	dialog_sec_wanted_intro_11	3c4a5122f39b8314	2	3		4	6	假案
 Dialogue	dialog_upper_hedonist_wrong_item	9d2c6eb79bcf9a43	3	6		7	9	夠勁
 Dialogue	dialog_upper_lower_visitor_luxury_1	563d16afa49b0b89	0	2		12	16	逛個街
@@ -162,7 +162,7 @@ Dialogue	dialog_ice_miner_greeting_3	5e1613c38e347037	1	2	運
 Dialogue	dialog_foreman_greeting_1	9670f00e6cab45ea	9	11	工程
 Dialogue	dialog_foreman_greeting_3	a0bf3eb126379118	4	6	項	7	9	程
 Dialogue	dialog_foreman_greeting_5	606f3d8b76677d56	6	7		8	9	工程
-Dialogue	dialog_scav_household_greeting_2	b8d3befa8983477f	3	4	弄
+Dialogue	dialog_scav_household_greeting_2	d65a5f59604a782c	3	4	弄
 Dialogue	dialog_corporate_buyer_offer_1	66841be629b7611d	5	6	有	8	10	
 Dialogue	dialog_corporate_buyer_offer_2	b558422ef42ad6c2	8	9		11	12	
 Dialogue	dialog_panicked_shop_deal_3	193a9d215765a26a	4	6	聲音
@@ -204,7 +204,7 @@ Dialogue	dialog_lottery_rep_intro_2	6d74621b5da45dd4	2	4	看你很
 Dialogue	dialog_vendor_permit_intro_2	cf4eda216b8fffeb	11	13	照	14	14	業
 Dialogue	dialog_vendor_permit_intro_3	e8385651aa3b00ad	7	8	個	9	10	家
 Dialogue	dialog_inventor_greet_3	dbc56eec2cbf4d54	4	6	計畫
-Dialogue	dialog_inventor_offer_4	128d19c940c304b6	8	10	弄
+Dialogue	dialog_inventor_offer_4	5d6d472b0062bbbb	8	10	弄
 Dialogue	dialog_miner_greet_4	6f543b0a6a079449	4	7		8	8	氣超好
 Dialogue	dialog_scav_greet_10	32d09681cab2c531	8	9	弄
 Dialogue	dialog_landlord_evict_now	dfd84a35aee46015	0	1	好
@@ -225,6 +225,7 @@ Dialogue	dialog_bargain_accept_reluctant_event_2	a7df34d2e1f8c9fe	12	13	選
 Dialogue	dialog_upper_lower_visitor_luxury_2	724388827e9c9761	6	6	裡
 Dialogue	dialog_mentor_bargain_2	aa8721ffbde83359	6	8	
 Dialogue	dialog_bargain_innocent_blackmail_2	15d8448634ad3bfb	3	4	安
+Dialogue	dialog_georgio3_arrest_sec_1	30d877d9bc229d4e	15	17	澡堂
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
@@ -272,6 +273,7 @@ Item	item_alarm_module_transmitter_flavor	883bbeea2ef96f63	14	17	視器畫面
 Item	item_ancient_alien_relics_flavor	dc4aaa8cc7b18a54	9	10		21	22	
 Item	item_security_alarm_desc	e91b3bb66d86d05e	0	1		2	2	幅	6	9	遭
 Item	item_surgery_tool_name	5ef62f301ffb7fb7	6	8	組
+Item	item_postit_name	42820b4e9544d0b0	1	2	利貼
 MainMenu	credit_ack	6897086dc7b23030	2	3	感
 MainMenu	option_note	09fd54c28bcb1129	9	11	支援	13	16	螢幕	28	29	執
 MainMenu	option_apply	95514e5a7ff65783	0	1	套
@@ -283,6 +285,7 @@ MainMenu	credit_community	95fac7100964fd95	1	2	群
 MainMenu	credit_community_note	fcccfc194193c6c1	7	8	群
 MainMenu	welcome_body	9ffca63fbc88ad03	1	2	群	28	29	群
 MainMenu	thanks_bowen	2e25331018041816	20	21	援
+MainMenu	main_provide_feedback	61bca1ad1f7efa64	0	2	意見
 Mechanic	mech_chem_finisher_btn_configure	148d195e21b05db5	0	2	設定
 Mechanic	mech_vending_tooltip_popular	2710378a91949d6e	7	8	透
 Mechanic	type_evaporator_module	f94eaef7fbeabe49	1	2	發
@@ -355,6 +358,9 @@ Mechanic	mech_feature_match	b3b01e2ad1c001a2	1	3	相符
 Mechanic	mech_wine_label_ingredient	95ad52ead511ddc0	1	2	
 Mechanic	mech_wine_no_ingredients	91a80ae5fe370087	1	2	
 Mechanic	mech_chem_synaprest_saved_credit	dab10f87c45b70fb	3	4	存
+Mechanic	event_cosmetic_electrical_news	46eac0d03d2bd03e	2	4	定期
+Mechanic	event_normal_power_maintenance_news	d46518230971197e	3	5	定期
+Mechanic	event_cosmetic_nutrifruit_news	dea42a5e2c573408	0	1	營養果人人	2	6	份
 NewGame	fence_gear5	0e486e24078ef708	15	17	使用
 NewGame	gunsmith_body	7078053844be4136	76	77	透	78	79	為
 NewGame	welcome_main	0fd371dc48b73daf	121	123	申請房	124	125	
@@ -373,7 +379,7 @@ PerkTable	perk_degenerative_osteoarthritis_name	3cf93c6fdb8e2ac2	1	2	化	3	4
 PerkTable	perk_expedition_organizer_desc	07e23f7e6704cd54	4	5	用
 PerkTable	perk_vending_desc	627af79998ffa5ad	2	3	即附
 UI	inte_shutter_cant	497cf8c1f091bee2	10	11	伍
-UI	ins_cig_seal_info	1d2efa73f7fcb771	37	38	仿	39	41	
+UI	ins_cig_seal_info	882343c5c20d9754	23	23	沒有	26	28		29	29	防偽標	37	38	仿	39	41	
 UI	ins_inj_intro	b44c937e48781ce2	19	20	體	22	23	
 UI	ins_inj_serial_number_intro	cbd08281a06a549a	17	17	數
 UI	intel_mentor_note_barter_body	9765f1fc2b6dcb38	59	61	正在發生的	63	64	
@@ -391,7 +397,7 @@ UI	book_chem_p2_s4_body	873b58f398620313	64	66	成	67	68	光譜
 UI	book_chem_p3_s4_body	ff73d0dc20fc136e	65	67	成	68	69	光譜
 UI	book_chem_p4_s3_body	5c7dead1b5bf51fd	25	26	透
 UI	ui_phone_no_answer	b812b2d3d8a822d1	1	3	人接聽
-UI	ui_info_reputation	563b05b479f5a8b1	0	1	透	7	9	
+UI	ui_info_reputation	ee93701a285a7673	0	1	透	7	9	
 UI	ui_wild_favor	07e1e3e918cffc56	13	14	透
 UI	book_wine_p2_body2	14c56418896e1dfc	4	9	並非必要	13	15	建議
 UI	lottery_prizes_intro	f0837bcb375cf297	5	7	有	9	11	號碼與中獎號碼相同，	22	24	號碼	26	28	相同
@@ -412,6 +418,17 @@ UI	book_chem_p5_body	8843ddef6b31d7d3	13	14	查
 UI	ui_clientele_tooltip	86dde2bc3b8e52b0
 UI	ui_clientele_no_merch_detected	11a2d8fb51b4fa0d
 UI	book_wine_p2_body1	7ce26b0434dbcb52	44	45		46	47	幅
+UI	lottery_match3	1755f4587baaed43	4	4	碼
+UI	lottery_match4	44fce9e933724392	4	4	碼
+UI	lottery_match5	3e71afef1cc3a2af	4	4	碼
+UI	ins_stamp_incorrect_logo_missing	54be07dd99745fc8	2	2	沒有	4	6	
+UI	ins_stamp_chip_intro	e140b31d549559b1	15	15	沒有	17	19		20	20	晶片
+UI	ins_inj_label_issues_sub	33fed6e81a863184	2	2	沒有	4	6	
+UI	book_ribwich_section1_body	6c93e57ffa94267a	2	2	沒有	6	8		9	9	包裝
+UI	book_ribwich_section2_body2	2a6be878b472cf00	2	2	沒有	6	8		9	9	日期
+UI	book_ribwich_section3_body2	9a471e7f424b6dad	17	17	沒有	23	25		26	26	編號
+UI	book_ribwich_section6_body	760f585ca7a197d6	17	17	果沒有	19	21		22	22	標誌
+UI	book_ribwich_section7_body	6672b2b397ddf413	26	26	果沒有	28	30		31	31	貼紙
 RepPerkTable	rep_perk_SEC_ALARM_IGNORED_flavor	f2208254c0dbda01	13	14	抑
 RepPerkTable	rep_perk_BM_UNINSURABLE_name	2d3df1340205f431	2	3	投
 RepPerkTable	rep_perk_REV_BLACKLISTED_flavor	5f351c6485a90195	8	9	出
@@ -429,8 +446,8 @@ RepPerkTable	rep_perk_SEC_THOROUGH_INSPECTION_flavor	d14e490a408256bb	34	34	把�
 RepPerkTable	rep_perk_SEC_TRUSTED_desc	86d61cc8afd344a7	33	33	展	34	35	
 RepPerkTable	rep_perk_UL_HITMAN_name	e77ba8c57d017114	0	0	受	1	2	
 NetworkUpgrade	network_EVIDENCE_REMOVAL_desc	0517b8aa045f883d	16	17	毀
-NetworkUpgrade	network_GUTTERFLOW_TAP_desc	bda316bb1e8c829a	9	10	
-NetworkUpgrade	network_RUSTWATER_TAP_desc	0922c5bee6bbfa14	9	10	
+NetworkUpgrade	network_GUTTERFLOW_TAP_desc	6c194d59928fb4ba	9	10	
+NetworkUpgrade	network_RUSTWATER_TAP_desc	899ffc566e99fbd0	9	10	
 NetworkUpgrade	network_WILD_FIXER_desc	51032abdb224b704	8	9	用
 NetworkUpgrade	network_RENOVATION1_desc	cb2f2600ed4ce060	5	6	用
 NetworkUpgrade	network_RENOVATION2_desc	89bd8af3e481a3d3	5	6	用
