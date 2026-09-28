@@ -4,9 +4,12 @@ Probably Stolen 繁體中文化 mod（非官方） v{version}
 把遊戲內建的簡體中文，在顯示時轉成繁體中文（台灣用語）。
 非官方製作，與開發商 Questing Goose Studio 無關。
 
+這個 mod 還沒有做詳細測試，如果有任何 bug 歡迎回報
+（Nexus 頁面的 Bugs 分頁，或 https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues）。
+
 【安裝】
 1. 安裝 MelonLoader 0.7.3（https://github.com/LavaGang/MelonLoader/releases），並啟動一次遊戲。
-   第一次啟動會比較久，而且需要連網（MelonLoader 要產生遊戲的組件）。
+   第一次啟動會比較久，而且需要連網（遊戲是 Unity IL2CPP 版本，MelonLoader 要先產生遊戲的組件）。
 2. 關閉遊戲，把壓縮檔裡的 Mods 與 UserData 資料夾，解壓到遊戲資料夾（和 Probably Stolen.exe 同一層），
    資料夾合併即可。
    找遊戲資料夾：Steam 遊戲庫 → 在遊戲上按右鍵 → 管理 → 瀏覽本機檔案。
@@ -41,9 +44,13 @@ Probably Stolen Traditional Chinese mod (unofficial) v{version}
 Shows the game's Simplified Chinese text in Traditional Chinese (Taiwan).
 Unofficial; not affiliated with Questing Goose Studio.
 
+This mod has not been thoroughly tested yet. Bug reports are welcome
+(the Bugs tab on the Nexus page, or https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues).
+
 Install
 1. Install MelonLoader 0.7.3 (https://github.com/LavaGang/MelonLoader/releases) and start the game once.
-   The first start takes a while and needs an internet connection.
+   The first start takes a while and needs an internet connection
+   (the game is a Unity IL2CPP build, so MelonLoader generates its assemblies first).
 2. Close the game. Extract the Mods and UserData folders from this archive into the game folder
    (next to Probably Stolen.exe), merging with the existing folders.
 3. Start the game and choose the Simplified Chinese language in the settings.
