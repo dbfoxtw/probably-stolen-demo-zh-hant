@@ -442,6 +442,7 @@ UI	book_ribwich_section2_body2	2a6be878b472cf00	2	2	沒有	6	8		9	9	日期
 UI	book_ribwich_section3_body2	9a471e7f424b6dad	17	17	沒有	23	25		26	26	編號
 UI	book_ribwich_section6_body	760f585ca7a197d6	17	17	果沒有	19	21		22	22	標誌
 UI	book_ribwich_section7_body	6672b2b397ddf413	26	26	果沒有	28	30		31	31	貼紙
+UI	ui_delete_save	71257816bc50a3a1	5	10	這個
 RepPerkTable	rep_perk_SEC_ALARM_IGNORED_flavor	f2208254c0dbda01	13	14	抑
 RepPerkTable	rep_perk_BM_UNINSURABLE_name	2d3df1340205f431	2	3	投
 RepPerkTable	rep_perk_REV_BLACKLISTED_flavor	5f351c6485a90195	8	9	出
