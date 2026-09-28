@@ -15,7 +15,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-[assembly: MelonInfo(typeof(ProbablyStolenZhHant.ZhHantMod), "Probably Stolen 繁體中文", "1.0.0", "dbfoxtw")]
+[assembly: MelonInfo(typeof(ProbablyStolenZhHant.ZhHantMod), "Probably Stolen 繁體中文", "1.1.0", "dbfoxtw")]
 [assembly: MelonGame("Questing Goose Studio", "Probably Stolen")]
 [assembly: HarmonyDontPatchAll] // 轉換資料載入後才手動掛上攔截
 

@@ -2,7 +2,7 @@ Probably Stolen 繁體中文化 mod（非官方） v{version}
 ==================================================
 
 把遊戲內建的簡體中文，在顯示時轉成繁體中文（台灣用語）。非官方製作。
-對應遊戲版本：049-REV5-L
+對應遊戲版本：DEMO Version 049-REV5-L
 
 翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。
 這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報
@@ -43,7 +43,7 @@ Probably Stolen Traditional Chinese mod (unofficial) v{version}
 --------------------------------------------------------------
 
 Shows the game's Simplified Chinese text in Traditional Chinese (Taiwan). Unofficial.
-Supported game version: 049-REV5-L
+Supported game version: DEMO Version 049-REV5-L
 
 The translation was proofread with AI. If any line reads awkwardly, please report it.
 This mod has not been thoroughly tested yet. Bug reports are welcome too

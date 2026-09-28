@@ -2,9 +2,9 @@
 
 *Probably Stolen*（Demo）的繁體中文（台灣用語）顯示 mod，使用 MelonLoader。非官方製作。
 
-對應遊戲版本：049-REV5-L
+對應遊戲版本：DEMO Version 049-REV5-L
 
-下載：[Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280)，或本 repo 的 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases)。
+下載：[Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280)，或本 repo 的 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases)。版本紀錄見 [CHANGELOG.md](CHANGELOG.md)。
 
 翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報（[Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues)，或 [Nexus 頁面](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs)的 Bugs 分頁）。
 
@@ -65,7 +65,7 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 
 ## English
 
-An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Traditional Chinese (Taiwan). Supported game version: 049-REV5-L. Download from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) or this repository's [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases).
+An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Traditional Chinese (Taiwan). Supported game version: DEMO Version 049-REV5-L. Download from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) or this repository's [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases).
 
 The translation was proofread with AI. If any line reads awkwardly, please report it. This mod has not been thoroughly tested yet, so bug reports are welcome too, via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the [Nexus page](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs).
 
