@@ -1,9 +1,10 @@
 # Probably Stolen 繁體中文化 mod（非官方）
 
-*Probably Stolen*（Demo）的繁體中文（台灣用語）顯示 mod，使用 MelonLoader。
-非官方製作，與開發商 Questing Goose Studio 無關。
+*Probably Stolen*（Demo）的繁體中文（台灣用語）顯示 mod，使用 MelonLoader。非官方製作。
 
-這個 mod 還沒有做詳細測試，如果有任何 bug 歡迎回報（[Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues)，或 Nexus 頁面的 Bugs 分頁）。
+對應遊戲版本：049-REV5-L
+
+翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報（[Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues)，或 Nexus 頁面的 Bugs 分頁）。
 
 > Unofficial Traditional Chinese (Taiwan) display mod for *Probably Stolen* (Demo), built on MelonLoader. See [English](#english) below.
 
@@ -19,7 +20,6 @@
 - **只在顯示時轉換**：攔截 TextMeshPro 設定文字的地方，文字顯示前才轉成繁體。遊戲檔、字串表、存檔都不修改，拔掉 mod 就回到原版簡中。
 - **在遊戲裡即時產生對照**：mod 讀取遊戲自己的簡中字串表，逐條用 [OpenCC](https://github.com/BYVoid/OpenCC)（s2tw）、術語表與逐條修正轉成繁體。
 - **簡中缺翻的條目**：原版會顯示「Translation Error」，mod 會補上譯文；沒有譯文時改顯示遊戲的英文。
-- 不連網，不收集或傳送任何資料。
 
 ## 這個 repo 不含遊戲內容
 
@@ -63,13 +63,12 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 
 ## English
 
-An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Traditional Chinese (Taiwan).
+An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Traditional Chinese (Taiwan). Supported game version: 049-REV5-L.
 
-This mod has not been thoroughly tested yet. Bug reports are welcome via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the Nexus page.
+The translation was proofread with AI. If any line reads awkwardly, please report it. This mod has not been thoroughly tested yet, so bug reports are welcome too, via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the Nexus page.
 
 - **Display-only.** Text is converted right before TextMeshPro displays it. Game files, string tables, and saves are never modified, and removing the mod restores the original Simplified Chinese.
 - **No game content is included.** The mod reads the game's own Simplified Chinese string tables at runtime and converts each entry with OpenCC (s2tw), a glossary, and per-entry corrections. The corrections are stored only as changed fragments and positions. Entries missing from the Simplified Chinese table get our translation, or fall back to the game's English text.
-- No network access. No data is collected or sent.
 - The game is a Unity IL2CPP build; the mod hooks it through MelonLoader (Il2CppInterop, Harmony).
 - Build from source: install MelonLoader 0.7.3, start the game once, then run `install.bat` (requires Python 3.10+ and the .NET SDK 6+).
 - License: MIT for the code and translation rules in this repository. The game's text, names, and assets belong to Questing Goose Studio.
