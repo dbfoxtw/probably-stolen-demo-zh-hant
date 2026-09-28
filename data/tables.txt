@@ -1,0 +1,14 @@
+ClientName
+Dialogue
+Hint
+Interactable
+Item
+MainMenu
+Mechanic
+NetworkUpgrade
+NewGame
+PerkTable
+PhoneDialogue
+RepPerkTable
+Tutorial
+UI

@@ -1,0 +1,8 @@
+# 寫死在遊戲程式碼裡、不在字串表的英文（原版簡中也沒翻）。只在遊戲語言是中文時套用（MelonLoader mod）。
+# 格式：觸發字串<Tab>正規表示式（.NET）<Tab>替換文字。文字含觸發字串才會跑正規表示式，$1 等是擷取群組。
+
+# 喬治奧的借據（金額由程式填入；英文原文把 owes 拼成 owns）
+I.O.U.	^I\.O\.U\.$	借據
+Georgio owns	Georgio owns the Shopkeeper (\d+) Credit\.	喬治奧欠店主 $1 信用點。
+Georgio will pay	Georgio will pay back with interest\.	喬治奧會連本帶利還清。
+-Georgio	^-Georgio$	——喬治奧

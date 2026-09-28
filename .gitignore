@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+build/
+mod/bin/
+mod/obj/
+fonts/
