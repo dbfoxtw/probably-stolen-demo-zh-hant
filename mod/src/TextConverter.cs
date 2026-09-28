@@ -232,7 +232,12 @@ namespace ProbablyStolenZhHant
 
             for (int u = 0; u < units.Count; u++)
             {
-                if (!NeedsConversion(tokens[units[u]])) continue;
+                if (!NeedsConversion(tokens[units[u]]))
+                {
+                    // 沒有簡體專用字、但整句查得到的片段（聲望特性標題裡標籤包住的「[未激活]」→「[未啟用]」）
+                    if (LookupFlexible(tokens[units[u]], templates: false) is string ex) tokens[units[u]] = ex;
+                    continue;
+                }
                 int last = CouldStartKey(tokens[units[u]]) ? Math.Min(u + MaxJoin, units.Count) - 1 : u;
                 int joinedTo = -1;
                 foreach (bool templates in new[] { false, true })
@@ -287,7 +292,8 @@ namespace ProbablyStolenZhHant
 
         // 由淺到深：只去空白 → 再去項目符號 → 再去「*」（原文本身可能就是「*動作描述*」）
         static readonly string[] TrimLevels = { "", "-•·", "-•·*" };
-        const string Brackets = "[]()（）【】「」";
+        // 成對的括號與引號（偶數位是左邊）；聲望特性的說明會被遊戲包上英文雙引號
+        const string Brackets = "[]()（）【】「」\"\"“”";
 
         string ConvertLine(string line)
         {
