@@ -6,3 +6,6 @@ I.O.U.	^I\.O\.U\.$	借據
 Georgio owns	Georgio owns the Shopkeeper (\d+) Credit\.	喬治奧欠店主 $1 信用點。
 Georgio will pay	Georgio will pay back with interest\.	喬治奧會連本帶利還清。
 -Georgio	^-Georgio$	——喬治奧
+
+# 錄音機裡玩家台詞的說話者（「Player: 台詞」；遊戲其他地方稱玩家為店主）
+Player	^Player$	店主

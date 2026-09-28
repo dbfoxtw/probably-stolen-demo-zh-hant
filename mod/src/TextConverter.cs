@@ -21,9 +21,11 @@ namespace ProbablyStolenZhHant
         readonly Dictionary<string, string> _exactTrim = new Dictionary<string, string>(StringComparer.Ordinal); // 去掉前後空白的版本
         readonly HashSet<string> _keyPrefixes = new HashSet<string>(StringComparer.Ordinal);
         readonly List<Template> _templates = new List<Template>();
+        readonly List<Template> _plainTemplates = new List<Template>(); // 字面沒有簡體專用字的樣板，見 ConvertCore
         readonly Dictionary<char, List<KeyValuePair<string, string>>> _phrases = new Dictionary<char, List<KeyValuePair<string, string>>>();
         readonly bool[] _trigger = new bool[char.MaxValue + 1];
         readonly Dictionary<string, string> _cache = new Dictionary<string, string>(StringComparer.Ordinal);
+        readonly HashSet<string> _unchanged = new HashSet<string>(StringComparer.Ordinal); // 轉換前後相同的短字串（例如「胡安」），認說話者用
 
         TextConverter(Translator tr) { _tr = tr; }
 
@@ -69,6 +71,7 @@ namespace ProbablyStolenZhHant
             var outChars = new HashSet<char>();
             void Add(string s, string d)
             {
+                if (s == d && s.Length > 0 && s.Length <= MaxSpeaker) c._unchanged.Add(s);
                 if (string.IsNullOrEmpty(s) || s == d) return;
                 if (!c._exact.TryAdd(s, d) && c._exact[s] != d) c.Conflicts++;
             }
@@ -122,6 +125,9 @@ namespace ProbablyStolenZhHant
                     c._templates.Add(t);
             // 字面部分越長的樣板越具體，先比對（避免「…{0}…」把別的樣板的字面也吃進佔位符）
             c._templates.Sort((a, b) => b.LiteralLength.CompareTo(a.LiteralLength));
+            // 字面沒有簡體專用字、套用後字面卻會變的樣板（「你下周的租金是{0}。」→「下週」）另外列出，不用轉的字串也要比對
+            foreach (var t in c._templates)
+                if (t.Anchored && !c.NeedsConversion(t.Literal) && !t.KeepsLiteral) c._plainTemplates.Add(t);
             return c;
         }
 
@@ -143,8 +149,16 @@ namespace ProbablyStolenZhHant
             try
             {
                 if (_exact.TryGetValue(s, out var r)) { ExactHits++; return r; }
+                if ((r = TrySpeaker(s)) != null) { ExactHits++; return r; }
                 if (ChineseActive && _hardcoded.Count > 0 && ApplyHardcoded(s) is string h) { HardcodedHits++; return h; }
-                if (!NeedsConversion(s)) { Skipped++; return s; }
+                if (!NeedsConversion(s))
+                {
+                    // 樣板的字面沒有簡體專用字、填入的又是數字時，整句也沒有（「你下周的租金是{0}。」），仍要套樣板
+                    foreach (var t in _plainTemplates)
+                        if ((r = t.Apply(s, Convert)) != null) { TemplateHits++; return r; }
+                    Skipped++;
+                    return s;
+                }
                 if (_cache.TryGetValue(s, out r)) { CacheHits++; return r; }
                 r = LookupFlexible(s, templates: false);
                 if (r != null) ExactHits++;
@@ -217,6 +231,8 @@ namespace ProbablyStolenZhHant
 
             for (int u = 0; u < units.Count; u++)
             {
+                // 多筆對話紀錄放在同一個文字物件時，每行各自是「說話者: 台詞」
+                if (TrySpeaker(tokens[units[u]]) is string sp) { tokens[units[u]] = sp; continue; }
                 if (!NeedsConversion(tokens[units[u]])) continue;
                 int last = CouldStartKey(tokens[units[u]]) ? Math.Min(u + MaxJoin, units.Count) - 1 : u;
                 int joinedTo = -1;
@@ -283,6 +299,27 @@ namespace ProbablyStolenZhHant
             r = Fallback(line);
             Misses[line] = r;
             return r;
+        }
+
+        const string SpeakerSep = ": ";
+        const int MaxSpeaker = 20;
+
+        /// <summary>
+        /// 錄音機的對話紀錄是「說話者: 台詞」一行。整行查不到整句對照，會走後備轉換而套不到逐條修正（例如「妥了。」）；
+        /// 名字若沒有簡體專用字（「游客」），整行還可能被當成不用轉。所以說話者是字串表裡的整句（或寫死英文的
+        /// 「Player」）時，名字查整句、台詞當成獨立的一句轉換。字串表的原文沒有「短字串: 」開頭的，不會誤拆。
+        /// </summary>
+        string TrySpeaker(string s)
+        {
+            int i = s.IndexOf(SpeakerSep, StringComparison.Ordinal);
+            if (i <= 0 || i > MaxSpeaker || s.IndexOf('\n') >= 0) return null;
+            var name = s.Substring(0, i);
+            if (!_exact.TryGetValue(name, out var n))
+            {
+                if (_unchanged.Contains(name)) n = name;
+                else if (!ChineseActive || (n = ApplyHardcoded(name)) == null) return null;
+            }
+            return n + SpeakerSep + Convert(s.Substring(i + SpeakerSep.Length));
         }
 
         /// <summary>
@@ -395,13 +432,24 @@ namespace ProbablyStolenZhHant
             readonly string _prefix, _suffix;
             readonly string[] _names;   // 原文中各佔位符的文字，例如 "{0}"
             readonly string _target;
-            public readonly int LiteralLength;
+            public readonly string Literal; // 原文去掉佔位符後的字面部分
+            public int LiteralLength => Literal.Length;
+            /// <summary>譯文去掉佔位符後和原文字面相同：套用只會轉換佔位符的內容。</summary>
+            public bool KeepsLiteral
+            {
+                get
+                {
+                    var r = _target;
+                    foreach (var n in _names) r = r.Replace(n, "");
+                    return r == Literal;
+                }
+            }
             public bool Anchored => _prefix.Length > 0 && _suffix.Length > 0;
 
-            Template(Regex re, string prefix, string suffix, string[] names, string target, int literalLength)
+            Template(Regex re, string prefix, string suffix, string[] names, string target, string literal)
             {
                 _re = re; _prefix = prefix; _suffix = suffix; _names = names; _target = target;
-                LiteralLength = literalLength;
+                Literal = literal;
             }
 
             public static bool TryCreate(string src, string dst, out Template t)
@@ -410,13 +458,13 @@ namespace ProbablyStolenZhHant
                 var parts = Markup.Split(src);
                 var names = new List<string>();
                 var pattern = new StringBuilder("^");
-                int literal = 0;
+                var literal = new StringBuilder();
                 for (int i = 0; i < parts.Length; i++)
                 {
                     if (i % 2 == 0 || parts[i][0] != '{')
                     {
                         pattern.Append(Regex.Escape(parts[i]));
-                        literal += parts[i].Length;
+                        literal.Append(parts[i]);
                         continue;
                     }
                     if (names.Contains(parts[i])) return false; // 同一佔位符出現兩次，略過
@@ -427,7 +475,7 @@ namespace ProbablyStolenZhHant
                 pattern.Append('$');
                 string prefix = parts[0], suffix = parts[parts.Length - 1];
                 t = new Template(new Regex(pattern.ToString(), RegexOptions.Singleline | RegexOptions.CultureInvariant),
-                                 prefix, suffix, names.ToArray(), dst, literal);
+                                 prefix, suffix, names.ToArray(), dst, literal.ToString());
                 return true;
             }
 
