@@ -112,7 +112,6 @@ Dialogue	dialog_nellis4_5	d889f669b34f3fc1	1	2	絕對不會相	3	5		7	8	都在	9
 Dialogue	dialog_tourist_greet_1	265ee507d6827623	5	6		8	11	破舊	12	13	，
 Dialogue	dialog_upper_hedonist_greeting_1	da4ed3cef46e3a58	5	11	來一趟	13	15	遠	16	16	，手腳快點	17	22	
 Dialogue	dialog_loan2_paid_cash_player	f2fc038fa3cb8185	5	7	付現
-Dialogue	dialog_util_after_sell_done	fffb4d868b5194f1	0	3	還有
 Dialogue	dialog_junker_sell_3	4a0709e9ae5979a6	14	19	不難
 Dialogue	dialog_deal_accepted_6	09817dadf5e96ca5	0	1	好
 Dialogue	dialog_negociation_response_2	09817dadf5e96ca5	0	1	好
