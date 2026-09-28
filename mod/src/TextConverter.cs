@@ -311,15 +311,18 @@ namespace ProbablyStolenZhHant
         /// </summary>
         string TrySpeaker(string s)
         {
-            int i = s.IndexOf(SpeakerSep, StringComparison.Ordinal);
-            if (i <= 0 || i > MaxSpeaker || s.IndexOf('\n') >= 0) return null;
-            var name = s.Substring(0, i);
+            // 實機的格式是「 导师: …」，開頭有一個空格
+            int a = 0;
+            while (a < s.Length && char.IsWhiteSpace(s[a])) a++;
+            int i = s.IndexOf(SpeakerSep, a, StringComparison.Ordinal);
+            if (i <= a || i - a > MaxSpeaker || s.IndexOf('\n') >= 0) return null;
+            var name = s.Substring(a, i - a);
             if (!_exact.TryGetValue(name, out var n))
             {
                 if (_unchanged.Contains(name)) n = name;
                 else if (!ChineseActive || (n = ApplyHardcoded(name)) == null) return null;
             }
-            return n + SpeakerSep + Convert(s.Substring(i + SpeakerSep.Length));
+            return s.Substring(0, a) + n + SpeakerSep + Convert(s.Substring(i + SpeakerSep.Length));
         }
 
         /// <summary>
