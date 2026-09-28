@@ -1,5 +1,7 @@
 @echo off
-rem 移除 mod（MelonLoader 本身不動）
+rem Remove the mod (MelonLoader itself is left alone).
+rem This file is ASCII-only on purpose: cmd.exe parses .bat files byte by byte,
+rem and non-ASCII text (UTF-8 or Big5) can break the parser.
 setlocal
 cd /d "%~dp0"
 chcp 65001 >nul
@@ -14,7 +16,7 @@ if not exist "%VPY%" (
     )
 )
 if not exist "%VPY%" (
-    echo 需要 Python 3.10 以上：https://www.python.org/downloads/
+    echo Python 3.10+ is required: https://www.python.org/downloads/
     goto end
 )
 "%VPY%" -c "import opencc" >nul 2>nul
