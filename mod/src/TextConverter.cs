@@ -231,8 +231,6 @@ namespace ProbablyStolenZhHant
 
             for (int u = 0; u < units.Count; u++)
             {
-                // 多筆對話紀錄放在同一個文字物件時，每行各自是「說話者: 台詞」
-                if (TrySpeaker(tokens[units[u]]) is string sp) { tokens[units[u]] = sp; continue; }
                 if (!NeedsConversion(tokens[units[u]])) continue;
                 int last = CouldStartKey(tokens[units[u]]) ? Math.Min(u + MaxJoin, units.Count) - 1 : u;
                 int joinedTo = -1;
@@ -311,18 +309,34 @@ namespace ProbablyStolenZhHant
         /// </summary>
         string TrySpeaker(string s)
         {
-            // 實機的格式是「 导师: …」，開頭有一個空格
-            int a = 0;
-            while (a < s.Length && char.IsWhiteSpace(s[a])) a++;
-            int i = s.IndexOf(SpeakerSep, a, StringComparison.Ordinal);
-            if (i <= a || i - a > MaxSpeaker || s.IndexOf('\n') >= 0) return null;
-            var name = s.Substring(a, i - a);
-            if (!_exact.TryGetValue(name, out var n))
+            if (s.IndexOf('\n') >= 0)
             {
-                if (_unchanged.Contains(name)) n = name;
-                else if (!ChineseActive || (n = ApplyHardcoded(name)) == null) return null;
+                // 多筆紀錄放在同一個文字物件時逐行轉換：一行裡的標籤（<b>）會讓拼接字串的流程把台詞切斷，查不到整句
+                var lines = s.Split('\n');
+                bool any = false;
+                foreach (var l in lines)
+                    if (ParseSpeaker(l, out _, out _, out _)) { any = true; break; }
+                if (!any) return null;
+                for (int j = 0; j < lines.Length; j++) lines[j] = Convert(lines[j]);
+                return string.Join("\n", lines);
             }
+            if (!ParseSpeaker(s, out var a, out var i, out var n)) return null;
             return s.Substring(0, a) + n + SpeakerSep + Convert(s.Substring(i + SpeakerSep.Length));
+        }
+
+        /// <summary>單行是否為「 名字: 」開頭、而且名字認得；a 為名字起點，i 為分隔符位置，n 為名字的譯文。</summary>
+        bool ParseSpeaker(string s, out int a, out int i, out string n)
+        {
+            n = null;
+            // 實機的格式是「 导师: …」，開頭有一個空格
+            a = 0;
+            while (a < s.Length && char.IsWhiteSpace(s[a])) a++;
+            i = s.IndexOf(SpeakerSep, a, StringComparison.Ordinal);
+            if (i <= a || i - a > MaxSpeaker) return false;
+            var name = s.Substring(a, i - a);
+            if (_exact.TryGetValue(name, out n)) return true;
+            if (_unchanged.Contains(name)) { n = name; return true; }
+            return ChineseActive && (n = ApplyHardcoded(name)) != null;
         }
 
         /// <summary>
