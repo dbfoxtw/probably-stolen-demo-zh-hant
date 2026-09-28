@@ -228,6 +228,9 @@ Dialogue	dialog_bargain_innocent_blackmail_2	15d8448634ad3bfb	3	4	安
 Dialogue	dialog_georgio3_arrest_sec_1	30d877d9bc229d4e	15	17	澡堂
 Dialogue	dialog_power_maint_deal_2	0f16600f7fc3c507	14	15	顆
 Dialogue	dialog_power_maint_deal_3	2064fa3045a3c63e	4	5	顆
+Dialogue	dialog_sec_wanted_intro_12	4c133f9c72e7701b	1	2		3	5	當班平	6	7	
+Dialogue	dialog_broken_machine_intro_2	b81960809efe5adb	4	5	切割
+Dialogue	dialog_sec_wanted_intro2_8	da8f4deeb5d12407	2	4	當班平	5	6	
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
