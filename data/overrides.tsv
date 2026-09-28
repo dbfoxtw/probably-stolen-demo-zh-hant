@@ -119,6 +119,8 @@ Dialogue	dialog_negociation_response_2	09817dadf5e96ca5	0	1	好
 Dialogue	dialog_bargain_accept_very_reluctant_1	fadb25d254871a55	8	9	好
 Dialogue	dialog_bargain_accept_very_reluctant_2	be900dd6921b1c73	9	10	好
 Dialogue	dialog_deal_accepted_4	b67739a01d869cc1	0	2	可以
+Dialogue	dialog_story_food_buyer2_3	8a20f5990c77eeef	0	2	如果可能	10	11	
+Dialogue	dialog_story_food_buyer2_4	e90b0b44d659a0f3	0	5	我不想買兩件	10	17	
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
