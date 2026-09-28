@@ -6,7 +6,8 @@ Probably Stolen 繁體中文化 mod（非官方） v{version}
 
 翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。
 這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報
-（Nexus 頁面的 Bugs 分頁，或 https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues）。
+（https://www.nexusmods.com/probablystolen/mods/280?tab=bugs
+ 或 https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues）。
 
 【安裝】
 1. 安裝 MelonLoader 0.7.3（https://github.com/LavaGang/MelonLoader/releases），並啟動一次遊戲。
@@ -46,7 +47,8 @@ Supported game version: 049-REV5-L
 
 The translation was proofread with AI. If any line reads awkwardly, please report it.
 This mod has not been thoroughly tested yet. Bug reports are welcome too
-(the Bugs tab on the Nexus page, or https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues).
+(https://www.nexusmods.com/probablystolen/mods/280?tab=bugs
+ or https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues).
 
 Install
 1. Install MelonLoader 0.7.3 (https://github.com/LavaGang/MelonLoader/releases) and start the game once.
