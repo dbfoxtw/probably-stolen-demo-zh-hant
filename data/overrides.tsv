@@ -280,6 +280,7 @@ Item	item_security_alarm_desc	e91b3bb66d86d05e	0	1		2	2	幅	6	9	遭
 Item	item_surgery_tool_name	5ef62f301ffb7fb7	6	8	組
 Item	item_postit_name	42820b4e9544d0b0	1	2	利貼
 Item	item_shampoo_name	df646f862a0d3dbf	5	8	沐浴乳
+Item	item_toolbox_desc	2bfe8c7b6adc4cf8	22	23	對	24	26	格子
 MainMenu	credit_ack	6897086dc7b23030	2	3	感
 MainMenu	option_note	09fd54c28bcb1129	9	11	支援	13	16	螢幕	28	29	執
 MainMenu	option_apply	95514e5a7ff65783	0	1	套
@@ -367,6 +368,11 @@ Mechanic	mech_chem_synaprest_saved_credit	dab10f87c45b70fb	3	4	存
 Mechanic	event_cosmetic_electrical_news	46eac0d03d2bd03e	2	4	定期
 Mechanic	event_normal_power_maintenance_news	d46518230971197e	3	5	定期
 Mechanic	event_cosmetic_nutrifruit_news	dea42a5e2c573408	0	1	營養果人人	2	6	份
+Mechanic	mech_toolbox_label_slot	a4289892caa0b14c	0	2	第	5	5	格
+Mechanic	mech_toolbox_tooltip_slots	139e5d21b4736523	3	5	格數
+Mechanic	mech_gun_tag_special1	2e9cda907201656d	2	2	插	3	4	
+Mechanic	mech_gun_tag_special2	ad279bcaff183d04	2	2	插	3	4	
+Mechanic	mech_gun_tag_special3	31845fe277b425e8	2	2	插	3	4	
 NewGame	fence_gear5	0e486e24078ef708	15	17	使用
 NewGame	gunsmith_body	7078053844be4136	76	77	透	78	79	為
 NewGame	welcome_main	0fd371dc48b73daf	121	123	申請房	124	125	
@@ -384,6 +390,7 @@ PerkTable	perk_proficient_scavenger_desc	a1f34de266c64a4d	2	4	前往
 PerkTable	perk_degenerative_osteoarthritis_name	3cf93c6fdb8e2ac2	1	2	化	3	4	
 PerkTable	perk_expedition_organizer_desc	07e23f7e6704cd54	4	5	用
 PerkTable	perk_vending_desc	627af79998ffa5ad	2	3	即附
+PerkTable	perk_colorful_character_desc	140e983e3368c884	2	2	可選	4	6	
 UI	inte_shutter_cant	497cf8c1f091bee2	10	11	伍
 UI	ins_cig_seal_info	882343c5c20d9754	23	23	沒有	26	28		29	29	防偽標	37	38	仿	39	41	
 UI	ins_inj_intro	b44c937e48781ce2	19	20	體	22	23	
