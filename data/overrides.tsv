@@ -35,7 +35,7 @@ Dialogue	dialog_chem_return_substance_7	7be7a89daeb6fc1d	14	16	猛
 Dialogue	dialog_hireling_ready_2	59a1464869ba1766	3	5	工作
 Dialogue	dialog_barter_addict_blood_yes	30dc44656e53387e	1	2	囉
 Dialogue	dialog_cartel_checkin_reliable_2	8eaed1df78764825	0	1	好
-Dialogue	dialog_cartel_weekly_short_2	38af94f7951a61a7	5	6	{	7	7	}
+Dialogue	dialog_cartel_weekly_short_2	38af94f7951a61a7
 Dialogue	dialog_cartel_exit3_2	889155993a4f1c79	1	2	面	3	5	有	7	7	定下來了	9	10		11	13	做	15	16	事才行
 Dialogue	dialog_scav_household_greeting_4	7987c5742ae10827	12	12	要不要	15	16	
 Dialogue	dialog_scav_household_greeting_5	31127f6bb77936d3	0	1	挖	10	13	想說	14	14	可	15	15	會
@@ -73,7 +73,7 @@ Dialogue	dialog_bargain_talk_bad_2	4e6c85e55c4b0f4e	13	14	家
 Dialogue	dialog_upper_hedonist_request_1	6ac9c37fa45d197a	2	3	菸	8	9	
 Dialogue	dialog_wild_network_reminder_1	f6101d5be269c5fe	14	15	一通	18	18	還	19	19	打	21	23	
 Dialogue	dialog_wild_network_reminder_4	f36fae41d43d7613	13	14	田
-Dialogue	dialog_barter_for	0678c9642228ae71	3	3	{0}
+Dialogue	dialog_barter_for	0678c9642228ae71
 Dialogue	dialog_sawyer_cheng_3	2e64e512e1b78526	10	10	他	11	13	人家
 Dialogue	dialog_sec_inspect_grace_2	5c1f6c9eb72c90af	6	8		9	10	靠山
 Dialogue	dialog_chem_return_followup_6	9c7f0c3a25dc4d6c	1	3		4	8	了	11	12		14	14	貨
@@ -314,7 +314,7 @@ Mechanic	mech_chem_poison_not_finished	03cf2b34be95c393	17	19	事情
 Mechanic	event_op_food_drive_desc	ce362b8ff61a1a30	46	47	不過	48	52	在作秀
 Mechanic	event_op_raid_bm_desc	42565f127bde7c17	11	12	據	31	33	進行
 Mechanic	handler_btn_consume	34c2a60aefc3f843	0	2	服用
-Mechanic	mech_lottery_edition_tooltip	cfe95ebd003a616f	0	4	第{0}期
+Mechanic	mech_lottery_edition_tooltip	cfe95ebd003a616f	0	4	期別
 Mechanic	mech_nightlog_aug_incoming	68ddd84ce2d71607	23	24	今
 Mechanic	mech_nightlog_vandalized_security	7761efcac3354c23	8	10	支持者
 Mechanic	rep_disfavored	7725edb7237594d4	2	4	歡迎

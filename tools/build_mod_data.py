@@ -18,7 +18,7 @@ import opencc
 ROOT = Path(__file__).resolve().parents[1]
 OPENCC_DICTS = ["CJK_Compatibility_Ideographs", "STPhrases", "STPhrases_GeneratedFromRegionalPhrases",
                 "STCharacters", "TWVariantsPhrases", "TWVariants"]  # 要和 mod/src/OpenCC.cs 一致
-DATA_FILES = ["terms.tsv", "overrides.tsv", "hardcoded.tsv", "tables.txt"]
+DATA_FILES = ["terms.tsv", "overrides.tsv", "args.tsv", "hardcoded.tsv", "tables.txt"]
 OPTIONAL_FILES = ["fills.tsv"]
 
 

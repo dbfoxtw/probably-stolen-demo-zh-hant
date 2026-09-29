@@ -26,6 +26,20 @@ namespace ProbablyStolenZhHant
         /// <summary>簡中缺翻的條目（表/key → 譯文），由 MissingTranslations 在產生字串時補上。</summary>
         public readonly Dictionary<string, string> Fills = new Dictionary<string, string>(StringComparer.Ordinal);
 
+        /// <summary>
+        /// 原文漏了英文有的佔位符（「换取：」少了 {0}）的條目：表/key → 補上佔位符的譯文。
+        /// 只在畫面顯示時轉換的話，遊戲已經代入完參數，參數早就丟了；所以由 MissingTranslations 在字串表產生字串時代入。
+        /// 這條的逐條修正生效（原文雜湊相符）才放進來，遊戲更新改了原文就不套用。
+        /// </summary>
+        public readonly Dictionary<string, string> WithArgs = new Dictionary<string, string>(StringComparer.Ordinal);
+
+        /// <summary>WithArgs 各條的簡中原文；GenerateLocalizedString 每次查字串都會經過，先比原文，對上了才查 key。</summary>
+        public readonly HashSet<string> WithArgsSources = new HashSet<string>(StringComparer.Ordinal);
+
+        readonly Dictionary<string, string> _args = new Dictionary<string, string>(StringComparer.Ordinal);
+        public int ArgCount => _args.Count;
+        public IEnumerable<string> ArgNames => _args.Keys;
+
         /// <summary>遊戲原文（或轉換規則）變了、暫停套用的逐條修正（表/key）。</summary>
         public readonly List<string> StaleOverrides = new List<string>();
         public int OverridesApplied;
@@ -84,6 +98,15 @@ namespace ProbablyStolenZhHant
                     }
                     else t.Fills[name] = Unescape(p[2]);
                 }
+            // 表<Tab>key<Tab>補上佔位符的譯文（可以沒有這個檔：這幾條就照原文，不代入參數）
+            var args = Path.Combine(dir, "args.tsv");
+            if (File.Exists(args))
+                foreach (var line in File.ReadAllLines(args, Encoding.UTF8))
+                {
+                    if (line.Length == 0 || line[0] == '#') continue;
+                    var p = line.Split('\t');
+                    if (p.Length >= 3) t._args[p[0] + "/" + p[1]] = Unescape(p[2]);
+                }
             return t;
         }
 
@@ -99,12 +122,30 @@ namespace ProbablyStolenZhHant
             var r = Convert(src);
             if (_overrides.TryGetValue(name, out var ov))
             {
-                if (ov.hash == Hash(r)) { OverridesApplied++; r = Patch(r, ov.ops); }
+                if (ov.hash == Hash(r))
+                {
+                    OverridesApplied++;
+                    r = Patch(r, ov.ops);
+                    if (_args.TryGetValue(name, out var a)) { WithArgs[name] = a; WithArgsSources.Add(src); }
+                }
                 else StaleOverrides.Add(name);
             }
             if (_fillRefs.TryGetValue(name, out var fills))
                 foreach (var f in fills) Fills[f] = r;
             return r;
+        }
+
+        static readonly Regex Placeholder = new Regex(@"\{(\d+)(?::[^{}]*)?\}", RegexOptions.Compiled);
+
+        /// <summary>把 {0}、{1:N0} 這類佔位符換成參數（我們的譯文只用到簡單的位置參數；格式字串忽略，參數不夠時保留原樣）。</summary>
+        public static string FormatArgs(string text, IReadOnlyList<string> args)
+        {
+            if (args == null || args.Count == 0 || text.IndexOf('{') < 0) return text;
+            return Placeholder.Replace(text, m =>
+            {
+                int i = int.Parse(m.Groups[1].Value);
+                return i < args.Count ? args[i] ?? "" : m.Value;
+            });
         }
 
         static string Patch(string s, (int start, int end, string text)[] ops)

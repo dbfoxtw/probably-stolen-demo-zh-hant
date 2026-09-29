@@ -1,0 +1,4 @@
+# 原文漏了英文有的佔位符時，補上佔位符的譯文：表<Tab>key<Tab>譯文（遊戲代入參數、而且這條的逐條修正生效時才套用）
+Dialogue	dialog_cartel_weekly_short_2	你本該交出{0}份！
+Dialogue	dialog_barter_for	換取：{0}
+Mechanic	mech_lottery_edition_tooltip	第{0}期

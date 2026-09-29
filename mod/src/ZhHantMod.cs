@@ -47,7 +47,7 @@ namespace ProbablyStolenZhHant
             Conv = TextConverter.Build(Tr, Array.Empty<(string, string, string)>(), Path.Combine(_dataDir, "hardcoded.tsv"));
             Conv.Produced = new Dictionary<string, string>(StringComparer.Ordinal);
             Log.Msg($"載入翻譯資料：OpenCC {Tr.OpenCCEntries} 詞、術語 {Tr.TermCount}、逐條修正 {Tr.OverrideCount}、" +
-                    $"缺翻補譯文 {Tr.Fills.Count} 條＋參照字串表 {Tr.FillRefCount} 條（{sw.ElapsedMilliseconds} ms）{(_debug ? "；除錯模式" : "")}");
+                    $"缺翻補譯文 {Tr.Fills.Count} 條＋參照字串表 {Tr.FillRefCount} 條、補佔位符 {Tr.ArgCount} 條（{sw.ElapsedMilliseconds} ms）{(_debug ? "；除錯模式" : "")}");
 
             var prefix = new HarmonyMethod(typeof(ZhHantMod).GetMethod(nameof(FirstArgPrefix), BindingFlags.Static | BindingFlags.NonPublic));
             int patched = 0;
@@ -73,7 +73,8 @@ namespace ProbablyStolenZhHant
             }
             else Log.Warning("找不到 Text Animator 的 TAnimCore.ConvertText，打字機效果可能失效");
 
-            // 簡中缺翻的條目：產生字串時補上譯文（沒有譯文就改用英文），不顯示「Translation Error」
+            // 簡中缺翻的條目：產生字串時補上譯文（沒有譯文就改用英文），不顯示「Translation Error」；
+            // 原文漏了佔位符的條目：趁參數還在時補上並代入
             MissingTranslations.Init(Tr, Log);
             var generate = AccessTools.Method(typeof(UnityEngine.Localization.Settings.LocalizedStringDatabase), "GenerateLocalizedString");
             if (generate != null)
@@ -201,7 +202,7 @@ namespace ProbablyStolenZhHant
             Conv = conv;
             _tables = TableState.Done;
             Log.Msg($"簡中字串表 {tables.Count} 張、{conv.EntryCount} 條 → 整句 {conv.ExactCount}、樣板 {conv.TemplateCount}、短詞 {conv.PhraseCount}、" +
-                    $"簡體專用字 {conv.TriggerCount}、同句異譯 {conv.Conflicts}；逐條修正套用 {Tr.OverridesApplied} 條、缺翻補譯文 {Tr.Fills.Count} 條（{sw.ElapsedMilliseconds} ms，" +
+                    $"簡體專用字 {conv.TriggerCount}、同句異譯 {conv.Conflicts}；逐條修正套用 {Tr.OverridesApplied} 條、缺翻補譯文 {Tr.Fills.Count} 條、補佔位符 {Tr.WithArgs.Count}/{Tr.ArgCount} 條（{sw.ElapsedMilliseconds} ms，" +
                     $"遊戲啟動後 {Time.realtimeSinceStartup:F1} 秒）");
             if (Tr.StaleOverrides.Count > 0)
                 Log.Warning($"原文已變動、暫停套用的逐條修正 {Tr.StaleOverrides.Count} 條：{string.Join("、", Tr.StaleOverrides.GetRange(0, Math.Min(10, Tr.StaleOverrides.Count)))}");
@@ -337,7 +338,7 @@ namespace ProbablyStolenZhHant
 
         void Report()
         {
-            Log.Msg(Conv.Stats() + $"；缺翻補譯文 {MissingTranslations.FillHits}、改用英文 {MissingTranslations.EnglishHits}");
+            Log.Msg(Conv.Stats() + $"；缺翻補譯文 {MissingTranslations.FillHits}、改用英文 {MissingTranslations.EnglishHits}、補佔位符 {MissingTranslations.ArgHits}");
             if (!_debug || _tables != TableState.Done) return; // 暫用轉換器的後備轉換不代表正式版會漏掉
             try { Conv.WriteMisses(Path.Combine(_dataDir, "misses.tsv")); }
             catch (Exception e) { Log.Warning($"寫入 misses.tsv 失敗：{e.Message}"); }
