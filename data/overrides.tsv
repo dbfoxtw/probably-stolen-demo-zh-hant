@@ -244,7 +244,7 @@ Item	item_blank_keycard_desc	985919ccf4a3927d	28	30	存取
 Item	item_system_module_ruined_desc	a702bec522418767	28	30	
 Item	item_med_bottle_small_pink_desc	5edd98f39e51b1c9	18	19	透
 Item	item_soda_red_desc	15d1eda5aa26cbbb	21	22	乾
-Item	item_desequencer_instruction_flavor	430f95d1c1823583	33	33	晶片
+Item	item_desequencer_instruction_flavor	819744adae5770df	33	33	晶片
 Item	item_hydroponic_desc	9c851cbfa5ab2b55	19	20	轉
 Item	item_moisture_farm_instruction_short	ed405b33775f4e7a	3	4	透	55	56	透
 Item	item_water_purifier_instruction_short	b6667be34ab3297b	54	55	透
