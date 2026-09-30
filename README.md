@@ -14,7 +14,21 @@
 
 - 遊戲目前只有簡體中文。這個 mod 在文字要顯示時，把簡體中文轉成繁體中文（台灣用語）。
 - 在遊戲設定選「简体中文」即可；裝了 mod 後，選單上會顯示「繁體中文」。
-- 可選：把遊戲的簡體手寫字型換成支援繁體的手寫字型。
+- 簽名、紙條等手寫文字，改用毛筆的佑字 肅（補上繁體缺的字），風格接近原版。
+
+## 安裝
+
+1. 安裝 [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) 0.7.3，並啟動一次遊戲。遊戲是 Unity IL2CPP 版本，MelonLoader 要先產生遊戲的組件，第一次啟動可能需時十分鐘。
+2. 從 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) 下載最新版的 `ProbablyStolen-ZhHant-<版本>.zip`（Assets 底下），或到 [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) 下載。
+3. 關閉遊戲，把壓縮檔裡的 `Mods` 與 `UserData` 資料夾解壓到遊戲資料夾（和 `Probably Stolen.exe` 同一層），資料夾合併即可。
+   - 找遊戲資料夾：Steam 遊戲庫 → 在遊戲上按右鍵 → 管理 → 瀏覽本機檔案。
+4. 開遊戲，在設定的語言選單選「简体中文」。裝了 mod 後，選單上會顯示「繁體中文」。
+
+更新版本時，照同樣步驟解壓覆蓋即可。
+
+## 移除
+
+刪除遊戲資料夾裡的 `Mods\ProbablyStolenZhHant.dll` 與 `UserData\ZhHant` 資料夾，就回到原版簡中，存檔可以直接沿用。MelonLoader 本身要另外移除：刪除 `version.dll`、`MelonLoader`、`Mods`、`Plugins`、`UserData`、`UserLibs`。
 
 ## 運作方式
 
@@ -39,7 +53,9 @@
 
 OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`）。
 
-## 從原始碼建置
+## 從原始碼建置（開發者）
+
+一般玩家請看上面的「安裝」，不需要建置。
 
 需要 Windows、Python 3.10 以上、.NET SDK 6 以上。
 
@@ -75,8 +91,18 @@ An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Trad
 
 The translation was proofread with AI. If any line reads awkwardly, please report it. This mod has not been thoroughly tested yet, so bug reports are welcome too, via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the [Nexus page](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs).
 
+**Install**
+
+1. Install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) 0.7.3 and start the game once. The first start may take up to ten minutes while MelonLoader generates the game's assemblies.
+2. Download the latest `ProbablyStolen-ZhHant-<version>.zip` from [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) (under Assets) or from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280).
+3. Close the game and extract the `Mods` and `UserData` folders into the game folder (next to `Probably Stolen.exe`), merging with the existing folders.
+4. Start the game and choose the Simplified Chinese language in the settings. With the mod installed, it is shown as Traditional Chinese.
+
+**Uninstall:** delete `Mods\ProbablyStolenZhHant.dll` and the `UserData\ZhHant` folder.
+
 - **Display-only.** Text is converted right before TextMeshPro displays it. Game files, string tables, and saves are never modified, and removing the mod restores the original Simplified Chinese.
 - **No game content is included.** The mod reads the game's own Simplified Chinese string tables at runtime and converts each entry with OpenCC (s2tw), a glossary, and per-entry corrections. The corrections are stored only as changed fragments and positions. Entries missing from the Simplified Chinese table get our translation, or fall back to the game's English text.
 - The game is a Unity IL2CPP build; the mod hooks it through MelonLoader (Il2CppInterop, Harmony).
-- Build from source: install MelonLoader 0.7.3, start the game once, then run `install.bat` (requires Python 3.10+ and the .NET SDK 6+).
+- Handwritten text (signatures and notes) uses Yuji Syuku, a brush font close to the original, with the few missing Traditional Chinese glyphs added (SIL OFL 1.1).
+- Build from source (developers only): install MelonLoader 0.7.3, start the game once, then run `install.bat` (requires Python 3.10+ and the .NET SDK 6+).
 - License: MIT for the code and translation rules in this repository. The game's text, names, and assets belong to Questing Goose Studio.
