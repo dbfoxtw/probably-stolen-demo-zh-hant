@@ -49,7 +49,10 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
    - 手寫字型：把支援繁體的 .ttf／.otf 放在 `fonts/handwritten.ttf`，或加上 `--font 字型檔`。
    - 除錯模式：加上 `--debug`，會記錄後備轉換（`UserData\ZhHant\misses.tsv`）、每分鐘統計，並做缺翻自我測試。
 3. 只建置、不安裝：`python tools/install.py build`。
-4. 打包發布用的壓縮檔：`python tools/package.py`。發布版附的手寫字型是霞鶩文楷 TC，放在 `fonts/handwritten.ttf`，授權檔放在 `fonts/handwritten.LICENSE.txt`。
+4. 打包發布用的壓縮檔：`python tools/package.py`。發布版附的手寫字型是補字版的佑字 肅（Yuji Syuku ZhHant）：
+   - 從 [Google Fonts](https://github.com/google/fonts/tree/main/ofl/yujisyuku) 下載 `YujiSyuku-Regular.ttf` 與 `OFL.txt`，放到 `fonts/candidates/`，後者改名 `YujiSyuku-OFL.txt`。
+   - 執行 `python tools/make_handwritten_font.py`，會產生 `fonts/handwritten.ttf` 與授權檔 `fonts/handwritten.LICENSE.txt`。
+   - 這支腳本用佑字自己的部件拼出繁中缺的「你喔嗎汙」，並調整刪節號的間距。
 
 ## 已知衝突
 
@@ -63,6 +66,7 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 遊戲的文字、名稱與素材，權利屬於 Questing Goose Studio，不在授權範圍內。第三方元件：
 
 - OpenCC 字典：Apache License 2.0，建置時附上授權文字。
+- 手寫字型（發布版）：佑字 肅（Yuji Syuku，片岡佑之，The Yuji Project Authors）的補字版，SIL Open Font License 1.1。修改版同樣是 OFL，附上授權文字。
 - MelonLoader：Apache License 2.0；Harmony：MIT（執行時由 MelonLoader 提供，不隨本 mod 散布）。
 
 ## English

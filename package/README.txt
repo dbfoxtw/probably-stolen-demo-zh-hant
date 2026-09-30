@@ -24,7 +24,7 @@ MelonLoader 本身要另外移除：刪除 version.dll、MelonLoader、Mods、Pl
 【說明】
 - 只在顯示時轉換：不修改遊戲檔、字串表與存檔。拔掉 mod 就回到原版簡中，存檔可以直接沿用。
 - 簡中缺翻的條目（原版會顯示 Translation Error）會補上譯文。
-- 導師筆記、紙條等手寫文字，改用支援繁體的霞鶩文楷 TC。
+- 簽名、紙條等手寫文字，改用毛筆的佑字 肅（補上繁體缺的字），風格接近原版。
   不想換字型的話，刪除 UserData\ZhHant\handwritten.ttf。
 - 已知衝突：其他翻譯 mod，以及同樣修改 TextMeshPro 文字或字型的 mod。
 - 遊戲更新後如果有新的文字，仍會自動轉成繁體；只是潤稿修正過的句子，原文變了就會改回自動轉換。
@@ -33,8 +33,8 @@ MelonLoader 本身要另外移除：刪除 version.dll、MelonLoader、Mods、Pl
 - 本 mod：MIT 授權（LICENSE.txt）。
   原始碼：https://github.com/dbfoxtw/probably-stolen-demo-zh-hant
 - 簡繁轉換字典：OpenCC（https://github.com/BYVoid/OpenCC），Apache License 2.0（opencc\LICENSE）
-- 手寫字型：霞鶩文楷 TC（LXGW WenKai TC，https://github.com/lxgw/LxgwWenkaiTC），
-  SIL Open Font License 1.1（handwritten-font-LICENSE.txt）
+- 手寫字型：佑字 肅（Yuji Syuku，片岡佑之，https://github.com/Kinutafontfactory/Yuji）的補字版
+  Yuji Syuku ZhHant，SIL Open Font License 1.1（handwritten-font-LICENSE.txt）
 - MelonLoader（https://github.com/LavaGang/MelonLoader），Apache License 2.0
 - 遊戲的文字、名稱與素材，權利屬於 Questing Goose Studio。
 
@@ -69,5 +69,6 @@ Notes
 License
 - This mod: MIT (LICENSE.txt). Source: https://github.com/dbfoxtw/probably-stolen-demo-zh-hant
 - OpenCC dictionaries: Apache License 2.0 (opencc\LICENSE)
-- LXGW WenKai TC font: SIL Open Font License 1.1 (handwritten-font-LICENSE.txt)
+- Handwritten font: Yuji Syuku ZhHant, a modified Yuji Syuku (Kataoka Yuji, https://github.com/Kinutafontfactory/Yuji)
+  with added Traditional Chinese glyphs. SIL Open Font License 1.1 (handwritten-font-LICENSE.txt)
 - The game's text, names, and assets belong to Questing Goose Studio.
