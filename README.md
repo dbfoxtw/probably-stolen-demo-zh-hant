@@ -74,6 +74,7 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 
 - 其他翻譯 mod。
 - 同樣修改 TextMeshPro 文字或字型的 mod。
+- 其他 mod 顯示的簡體文字也會自動轉成繁體（OpenCC＋術語表），但沒有逐條潤稿；不是用 TextMeshPro 顯示的文字不會轉換。
 
 ## 授權
 
@@ -99,6 +100,8 @@ The translation was proofread with AI. If any line reads awkwardly, please repor
 4. Start the game and choose the Simplified Chinese language in the settings. With the mod installed, it is shown as Traditional Chinese.
 
 **Uninstall:** delete `Mods\ProbablyStolenZhHant.dll` and the `UserData\ZhHant` folder.
+
+**Known conflicts:** other translation mods, and mods that change TextMeshPro text or fonts. Simplified Chinese text from other mods is also converted automatically, without per-line proofreading; text not displayed through TextMeshPro is left as is.
 
 - **Display-only.** Text is converted right before TextMeshPro displays it. Game files, string tables, and saves are never modified, and removing the mod restores the original Simplified Chinese.
 - **No game content is included.** The mod reads the game's own Simplified Chinese string tables at runtime and converts each entry with OpenCC (s2tw), a glossary, and per-entry corrections. The corrections are stored only as changed fragments and positions. Entries missing from the Simplified Chinese table get our translation, or fall back to the game's English text.

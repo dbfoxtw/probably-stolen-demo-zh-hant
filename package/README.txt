@@ -25,8 +25,8 @@ MelonLoader 本身要另外移除：刪除 version.dll、MelonLoader、Mods、Pl
 - 只在顯示時轉換：不修改遊戲檔、字串表與存檔。拔掉 mod 就回到原版簡中，存檔可以直接沿用。
 - 簡中缺翻的條目（原版會顯示 Translation Error）會補上譯文。
 - 簽名、紙條等手寫文字，改用毛筆的佑字 肅（補上繁體缺的字），風格接近原版。
-  不想換字型的話，刪除 UserData\ZhHant\handwritten.ttf。
 - 已知衝突：其他翻譯 mod，以及同樣修改 TextMeshPro 文字或字型的 mod。
+- 其他 mod 顯示的簡體文字也會自動轉成繁體，但沒有逐條潤稿；不是用 TextMeshPro 顯示的文字不會轉換。
 - 遊戲更新後如果有新的文字，仍會自動轉成繁體；只是潤稿修正過的句子，原文變了就會改回自動轉換。
 
 【授權與致謝】
@@ -65,6 +65,8 @@ Delete Mods\ProbablyStolenZhHant.dll and the UserData\ZhHant folder.
 Notes
 - Display-only: game files, string tables, and saves are never modified. Saves work with or without the mod.
 - Known conflicts: other translation mods, and mods that change TextMeshPro text or fonts.
+- Simplified Chinese text from other mods is also converted to Traditional Chinese automatically, without per-line proofreading.
+  Text not displayed through TextMeshPro is left as is.
 
 License
 - This mod: MIT (LICENSE.txt). Source: https://github.com/dbfoxtw/probably-stolen-demo-zh-hant
