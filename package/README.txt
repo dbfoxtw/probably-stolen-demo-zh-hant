@@ -19,7 +19,7 @@ Probably Stolen 繁體中文化 mod（非官方） v{version}
 2. 啟動一次遊戲。第一次會先出現 MelonLoader 的黑色視窗，花幾分鐘到十分鐘產生必要的檔案（需要連網）。
    等主選單出現後，關閉遊戲。
 3. 把這個壓縮檔裡的 Mods 與 UserData 資料夾，解壓縮到遊戲資料夾，資料夾合併即可。
-4. 開遊戲，在設定的語言選單選「简体中文」。裝了 mod 後，選單上會顯示「繁體中文」。
+4. 開遊戲，在主選單右上角的語言選單選「Simplified Chinese」。裝了 mod 後，選單上會顯示「Traditional Chinese」。
 更新 mod 時，只要重做第 3 步（解壓覆蓋）。
 
 【移除】
@@ -66,8 +66,8 @@ Find the game folder: Steam library → right-click the game → Manage → Brow
    generating files; it needs an internet connection. Close the game after the main menu appears.
 3. Extract the Mods and UserData folders from this archive into the game folder,
    merging with the existing folders.
-4. Start the game and choose the Simplified Chinese language in the settings.
-   With the mod installed, the menu shows it as Traditional Chinese.
+4. Start the game and choose "Simplified Chinese" in the language menu at the top right of the main menu.
+   With the mod installed, the menu shows it as "Traditional Chinese".
 To update the mod, just repeat step 3.
 
 Uninstall

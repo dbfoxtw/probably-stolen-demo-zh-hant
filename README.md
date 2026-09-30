@@ -13,7 +13,7 @@
 ## 這是什麼
 
 - 遊戲目前只有簡體中文。這個 mod 在文字要顯示時，把簡體中文轉成繁體中文（台灣用語）。
-- 在遊戲設定選「简体中文」即可；裝了 mod 後，選單上會顯示「繁體中文」。
+- 在主選單右上角的語言選單選「Simplified Chinese」即可；裝了 mod 後，選單上會顯示「Traditional Chinese」。
 - 簽名、紙條等手寫文字，改用書法家片岡佑之的毛筆字型「佑字 肅」（Yuji Syuku），並補上它缺的繁體字，風格接近原版。
 
 ## 安裝
@@ -32,7 +32,7 @@
 
 1. 從 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) 下載最新版的 `ProbablyStolen-ZhHant-<版本>.zip`（Assets 底下），或到 [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) 下載。
 2. 關閉遊戲，把壓縮檔裡的 `Mods` 與 `UserData` 資料夾**解壓縮到遊戲資料夾**，資料夾合併即可。
-3. 開遊戲，在設定的語言選單選「简体中文」。裝了 mod 後，選單上會顯示「繁體中文」。
+3. 開遊戲，在主選單右上角的語言選單選「Simplified Chinese」。裝了 mod 後，選單上會顯示「Traditional Chinese」。
 
 更新 mod 時，只要重做第二步（解壓覆蓋）。
 
@@ -109,7 +109,7 @@ Find the game folder: in your Steam library, right-click Probably Stolen → Man
 1. Install MelonLoader 0.7.3 (once): from the [v0.7.3 release page](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.3), download **`MelonLoader.x64.zip`** (not x86, not the Installer) and **extract it into the game folder**, next to `Probably Stolen.exe`. You should now see `version.dll` and a `MelonLoader` folder there.
 2. Start the game once. MelonLoader opens a console window and spends a few minutes (up to ten) generating files; it needs an internet connection. Close the game after the main menu appears.
 3. Download the latest `ProbablyStolen-ZhHant-<version>.zip` from [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) (under Assets) or from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280), and extract its `Mods` and `UserData` folders into the game folder, merging with the existing folders.
-4. Start the game and choose the Simplified Chinese language in the settings. With the mod installed, it is shown as Traditional Chinese.
+4. Start the game and choose "Simplified Chinese" in the language menu at the top right of the main menu. With the mod installed, it is shown as "Traditional Chinese".
 
 **Uninstall:** delete `Mods\ProbablyStolenZhHant.dll` and the `UserData\ZhHant` folder.
 
