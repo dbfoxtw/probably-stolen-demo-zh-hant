@@ -197,7 +197,16 @@ namespace ProbablyStolenZhHant
             }
             var conv = TextConverter.Build(Tr, entries, Path.Combine(_dataDir, "hardcoded.tsv"));
             conv.ChineseActive = Conv.ChineseActive;
-            if (_debug) conv.LoadMisses(Path.Combine(_dataDir, "misses.tsv")); // 跨次累積
+            if (_debug)
+            {
+                conv.LoadMisses(Path.Combine(_dataDir, "misses.tsv")); // 跨次累積
+                var hand = new StringBuilder();
+                foreach (var (table, key, src) in entries)
+                    if (src.Length > 0 && ((table == "Mechanic" && key.StartsWith("note_", StringComparison.Ordinal))
+                                           || (table == "UI" && Array.IndexOf(HandwrittenUiKeys, key) >= 0)))
+                        hand.Append(conv.Convert(src));
+                _handText = hand.ToString();
+            }
             var early = Conv;
             Conv = conv;
             _tables = TableState.Done;
@@ -235,7 +244,34 @@ namespace ProbablyStolenZhHant
 
         TMP_FontAsset _handFont;
         string _origHandName;
-        bool _handFontFailed;
+        bool _handFontFailed, _handTested;
+        string _handText; // 除錯模式：簽名與紙條的譯文，給手寫字型自我測試用
+
+        /// <summary>遊戲用手寫字型的字串表條目（另外是 Mechanic/note_* 的紙條）；和 tools/check.py 的 HANDWRITTEN_UI_KEYS 相同。</summary>
+        static readonly string[] HandwrittenUiKeys =
+            { "intel_mentor_signature", "intel_mentor_note_appraisal_signature", "ui_exchange_signature1", "ui_exchange_signature2" };
+
+        /// <summary>
+        /// 除錯模式的自我測試：請 TMP 用手寫字型產生簽名與紙條用到的每個字，產生失敗的字寫進 log。
+        /// 紙條是隨機出現的，不必等到抽中就能確認每個字（包括補字版拼出來的字）在遊戲裡都生得出來。
+        /// </summary>
+        void HandwrittenSelfTest()
+        {
+            try
+            {
+                var seen = new HashSet<char>();
+                var sb = new StringBuilder();
+                foreach (var c in Translator.Markup.Replace(_handText ?? "", ""))
+                    if (!char.IsWhiteSpace(c) && seen.Add(c)) sb.Append(c);
+                var chars = sb.ToString();
+                if (chars.Length == 0) { Log.Warning("手寫字型自我測試：字串表裡找不到簽名與紙條"); return; }
+                if (_handFont.TryAddCharacters(chars, out string missing) || string.IsNullOrEmpty(missing))
+                    Log.Msg($"手寫字型自我測試：簽名與紙條用到的 {chars.Length} 字都產生成功");
+                else
+                    Log.Warning($"手寫字型自我測試：{chars.Length} 字中有 {missing.Length} 字產生失敗（遊戲會改用黑體）：{missing}");
+            }
+            catch (Exception e) { Log.Error($"手寫字型自我測試失敗：{e.Message}"); }
+        }
 
         /// <summary>
         /// 手寫字型換成支援繁體的字型（UserData\ZhHant\handwritten.ttf/.otf）：執行時讀字型檔建立動態 TMP 字型，
@@ -312,6 +348,11 @@ namespace ProbablyStolenZhHant
                 {
                     _selfTested = true;
                     MissingTranslations.SelfTest(loc);
+                }
+                if (_debug && zh && !_handTested && _tables == TableState.Done && _handFont != null) // 手寫字型在場景初始化時才建立
+                {
+                    _handTested = true;
+                    HandwrittenSelfTest();
                 }
             }
             catch (Exception e)
