@@ -18,13 +18,23 @@
 
 ## 安裝
 
-1. 安裝 [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) 0.7.3，並啟動一次遊戲。遊戲是 Unity IL2CPP 版本，MelonLoader 要先產生遊戲的組件，第一次啟動可能需時十分鐘。
-2. 從 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) 下載最新版的 `ProbablyStolen-ZhHant-<版本>.zip`（Assets 底下），或到 [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) 下載。
-3. 關閉遊戲，把壓縮檔裡的 `Mods` 與 `UserData` 資料夾解壓到遊戲資料夾（和 `Probably Stolen.exe` 同一層），資料夾合併即可。
-   - 找遊戲資料夾：Steam 遊戲庫 → 在遊戲上按右鍵 → 管理 → 瀏覽本機檔案。
-4. 開遊戲，在設定的語言選單選「简体中文」。裝了 mod 後，選單上會顯示「繁體中文」。
+要先裝 MelonLoader（讓遊戲能載入 mod 的工具），再裝這個 mod。MelonLoader 只要裝一次。
 
-更新版本時，照同樣步驟解壓覆蓋即可。
+**找到遊戲資料夾**：Steam 遊戲庫 → 在 Probably Stolen 上按右鍵 → 管理 → 瀏覽本機檔案。開啟的資料夾裡有 `Probably Stolen.exe`，以下說的「遊戲資料夾」都是這裡。
+
+**第一步：安裝 MelonLoader 0.7.3**
+
+1. 到 [MelonLoader v0.7.3 的下載頁](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.3)，在 Assets 底下下載 **`MelonLoader.x64.zip`**（不是 x86，也不是 Installer）。
+2. 把 `MelonLoader.x64.zip` 的內容**解壓縮到遊戲資料夾**（和 `Probably Stolen.exe` 同一層）。解壓後，遊戲資料夾裡會多出 `version.dll` 與 `MelonLoader` 資料夾。
+3. 啟動一次遊戲。第一次會先出現 MelonLoader 的黑色視窗，花幾分鐘到十分鐘產生必要的檔案（需要連網）。等主選單出現後，關閉遊戲。
+
+**第二步：安裝這個 mod**
+
+1. 從 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) 下載最新版的 `ProbablyStolen-ZhHant-<版本>.zip`（Assets 底下），或到 [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) 下載。
+2. 關閉遊戲，把壓縮檔裡的 `Mods` 與 `UserData` 資料夾**解壓縮到遊戲資料夾**，資料夾合併即可。
+3. 開遊戲，在設定的語言選單選「简体中文」。裝了 mod 後，選單上會顯示「繁體中文」。
+
+更新 mod 時，只要重做第二步（解壓覆蓋）。
 
 ## 移除
 
@@ -94,9 +104,11 @@ The translation was proofread with AI. If any line reads awkwardly, please repor
 
 **Install**
 
-1. Install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) 0.7.3 and start the game once. The first start may take up to ten minutes while MelonLoader generates the game's assemblies.
-2. Download the latest `ProbablyStolen-ZhHant-<version>.zip` from [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) (under Assets) or from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280).
-3. Close the game and extract the `Mods` and `UserData` folders into the game folder (next to `Probably Stolen.exe`), merging with the existing folders.
+Find the game folder: in your Steam library, right-click Probably Stolen → Manage → Browse local files. It contains `Probably Stolen.exe`.
+
+1. Install MelonLoader 0.7.3 (once): from the [v0.7.3 release page](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.3), download **`MelonLoader.x64.zip`** (not x86, not the Installer) and **extract it into the game folder**, next to `Probably Stolen.exe`. You should now see `version.dll` and a `MelonLoader` folder there.
+2. Start the game once. MelonLoader opens a console window and spends a few minutes (up to ten) generating files; it needs an internet connection. Close the game after the main menu appears.
+3. Download the latest `ProbablyStolen-ZhHant-<version>.zip` from [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases) (under Assets) or from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280), and extract its `Mods` and `UserData` folders into the game folder, merging with the existing folders.
 4. Start the game and choose the Simplified Chinese language in the settings. With the mod installed, it is shown as Traditional Chinese.
 
 **Uninstall:** delete `Mods\ProbablyStolenZhHant.dll` and the `UserData\ZhHant` folder.
