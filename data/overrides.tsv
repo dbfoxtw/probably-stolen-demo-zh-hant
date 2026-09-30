@@ -233,6 +233,7 @@ Dialogue	dialog_broken_machine_intro_2	b81960809efe5adb	4	5	切割
 Dialogue	dialog_sec_wanted_intro2_8	da8f4deeb5d12407	2	4	當班平	5	6	
 Dialogue	dialog_deal_accepted_10	af465720311d3c5e	0	4	講好
 Dialogue	dialog_info_ice_miner_2	d0395e59c291bcc6	0	2	再過	6	7	
+Dialogue	dialog_minor_sick_lowers_1	9f7b07364300be6a	7	9	冷顫
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
