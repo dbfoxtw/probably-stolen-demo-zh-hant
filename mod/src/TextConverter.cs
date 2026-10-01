@@ -73,6 +73,7 @@ namespace ProbablyStolenZhHant
             var c = new TextConverter(tr);
             var outChars = new HashSet<char>();
             var outText = new StringBuilder(); // 全部譯文，用來確認短詞不會出現在已轉好的文字裡
+            var byKey = new Dictionary<string, string>(); // 「表/key」→ 譯文，給 hardcoded.tsv 的參照用
             void Add(string s, string d)
             {
                 if (s == d && s.Length > 0 && s.Length <= MaxSpeaker) c._unchanged.Add(s);
@@ -83,6 +84,7 @@ namespace ProbablyStolenZhHant
             {
                 if (string.IsNullOrEmpty(src)) continue;
                 var dst = tr.Translate(table, key, src);
+                byKey[table + "/" + key] = dst;
                 c.EntryCount++;
                 foreach (var ch in dst) outChars.Add(ch);
                 outText.Append(dst).Append('\n');
@@ -130,8 +132,16 @@ namespace ProbablyStolenZhHant
                 {
                     if (line.Trim().Length == 0 || line.TrimStart().StartsWith("#")) continue;
                     var p = line.Split('\t');
-                    if (p.Length >= 3 && p[0].Length > 0)
-                        c._hardcoded.Add((p[0], new Regex(p[1], RegexOptions.CultureInvariant), p[2]));
+                    if (p.Length < 3 || p[0].Length == 0) continue;
+                    var repl = p[2];
+                    // 「=表/key」：替換成字串表那一條的譯文（譯名和遊戲其他地方一致，公開的檔案也不用寫出遊戲原文）；
+                    // 字串表還沒載入（暫用轉換器）或找不到這條時先略過
+                    if (repl.StartsWith("="))
+                    {
+                        if (!byKey.TryGetValue(repl.Substring(1), out var r)) continue;
+                        repl = r.Replace("$", "$$");
+                    }
+                    c._hardcoded.Add((p[0], new Regex(p[1], RegexOptions.CultureInvariant), repl));
                 }
             foreach (var d in new[] { c._phrases, c._plainPhrases })
                 foreach (var list in d.Values)
