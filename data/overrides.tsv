@@ -59,6 +59,7 @@ Dialogue	dialog_wild_network_2	94d48ea6d0b4cc4e	0	1	我	5	7	地方	10	11	個	14	
 Dialogue	dialog_wild_network_8	a2336004d2f4dc5a	9	11		14	14	給我
 Dialogue	dialog_tourist_deal_3	8536019f63696b78	13	14	紓
 Dialogue	dialog_lottery_rep_intro_5	8b00dad46b76e75b	21	22	
+Dialogue	dialog_upper_lower_visitor_1	710444ddc4e305e0	6	7		11	15	小住幾天
 Dialogue	dialog_upper_lower_visitor_3	2bd96b6014946d7e	0	1	菸
 Dialogue	dialog_miner_offer_5	712499abd967d5a9	6	7	全
 Dialogue	dialog_miner_ask	1636af5a8c8bf810	9	10	菸
