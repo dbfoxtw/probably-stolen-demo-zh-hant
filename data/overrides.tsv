@@ -459,6 +459,7 @@ UI	ui_delete_save	71257816bc50a3a1	5	10	這個
 UI	ui_rep_gained	7da3df94aff8a13d	4	7	在	11	12		13	13	望提升了
 UI	ui_rep_lost	0458f874e2ac1d7e	4	7	在	11	12		13	13	望下降了
 UI	intel_mentor_note_afterhours_body	2e6e3828e5527c67	2	9	店鋪	11	11	之	22	25		28	29	其中一
+RepPerkTable	rep_perk_UL_TOURISTTRAP_desc	e56baee2601821a8	6	6	較不會	12	18	
 RepPerkTable	rep_perk_SEC_ALARM_IGNORED_flavor	f2208254c0dbda01	13	14	抑
 RepPerkTable	rep_perk_BM_UNINSURABLE_name	2d3df1340205f431	2	3	投
 RepPerkTable	rep_perk_REV_BLACKLISTED_flavor	5f351c6485a90195	8	9	出
@@ -475,7 +476,7 @@ RepPerkTable	rep_perk_SEC_THOROUGH_INSPECTION_name	4d91379196d19fa2	2	2	搜	3	4
 RepPerkTable	rep_perk_SEC_THOROUGH_INSPECTION_flavor	d14e490a408256bb	34	34	把店裡	36	39	遍
 RepPerkTable	rep_perk_SEC_TRUSTED_desc	86d61cc8afd344a7	33	33	展	34	35	
 RepPerkTable	rep_perk_UL_HITMAN_name	e77ba8c57d017114	0	0	受	1	2	
-RepPerkTable	rep_perk_REV_BLACKLISTED_desc	485d5b04f781beea	0	2	支持	8	13		19	19	的可能性降低
+RepPerkTable	rep_perk_REV_BLACKLISTED_desc	485d5b04f781beea	0	2	支持	8	8	較	9	13	會
 NetworkUpgrade	network_EVIDENCE_REMOVAL_desc	0517b8aa045f883d	16	17	毀
 NetworkUpgrade	network_GUTTERFLOW_TAP_desc	6c194d59928fb4ba	9	10	
 NetworkUpgrade	network_RUSTWATER_TAP_desc	899ffc566e99fbd0	9	10	
