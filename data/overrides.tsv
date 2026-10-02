@@ -238,6 +238,9 @@ Dialogue	dialog_deal_accepted_10	af465720311d3c5e	0	4	講好
 Dialogue	dialog_info_ice_miner_2	d0395e59c291bcc6	0	2	再過	6	7	
 Dialogue	dialog_minor_sick_lowers_1	9f7b07364300be6a	7	9	冷顫
 Dialogue	dialog_janitor_ue_8	fe5ad8106be5bc13	17	19	換
+Dialogue	dialog_lun_visit_right_item	ac46a2d64d8efac4	0	4	這個可以
+Dialogue	dialog_appraisal_board_decline_1	53ebaaf19e612776	0	3	可惜了	5	15	看人一向很準的
+Dialogue	dialog_loan_shark_intro_9	626be4ef87885a9d	7	8	息會	9	9	微	11	24	點
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
@@ -381,6 +384,7 @@ Mechanic	mech_gun_tag_special1	2e9cda907201656d	2	2	插	3	4
 Mechanic	mech_gun_tag_special2	ad279bcaff183d04	2	2	插	3	4	
 Mechanic	mech_gun_tag_special3	31845fe277b425e8	2	2	插	3	4	
 Mechanic	response_afterhours_select_backpack	c884c828f00dc83d	0	1		2	2	擇
+Mechanic	request_bm_evidence_desc	c51699dbc5a9e0a9	32	32	趕	33	33	它落回	42	48	手中	50	51	，先把	52	56	弄到手
 NewGame	fence_gear5	0e486e24078ef708	15	17	使用
 NewGame	gunsmith_body	7078053844be4136	76	77	透	78	79	為
 NewGame	welcome_main	0fd371dc48b73daf	121	123	申請房	124	125	
@@ -453,6 +457,7 @@ UI	book_ribwich_section7_body	6672b2b397ddf413	26	26	果沒有	28	30		31	31	貼�
 UI	ui_delete_save	71257816bc50a3a1	5	10	這個
 UI	ui_rep_gained	7da3df94aff8a13d	4	7	在	11	12		13	13	望提升了
 UI	ui_rep_lost	0458f874e2ac1d7e	4	7	在	11	12		13	13	望下降了
+UI	intel_mentor_note_afterhours_body	2e6e3828e5527c67	2	9	商店	11	11	之	22	25		28	29	其中一
 RepPerkTable	rep_perk_SEC_ALARM_IGNORED_flavor	f2208254c0dbda01	13	14	抑
 RepPerkTable	rep_perk_BM_UNINSURABLE_name	2d3df1340205f431	2	3	投
 RepPerkTable	rep_perk_REV_BLACKLISTED_flavor	5f351c6485a90195	8	9	出
@@ -469,6 +474,7 @@ RepPerkTable	rep_perk_SEC_THOROUGH_INSPECTION_name	4d91379196d19fa2	2	2	搜	3	4
 RepPerkTable	rep_perk_SEC_THOROUGH_INSPECTION_flavor	d14e490a408256bb	34	34	把店裡	36	39	遍
 RepPerkTable	rep_perk_SEC_TRUSTED_desc	86d61cc8afd344a7	33	33	展	34	35	
 RepPerkTable	rep_perk_UL_HITMAN_name	e77ba8c57d017114	0	0	受	1	2	
+RepPerkTable	rep_perk_REV_BLACKLISTED_desc	485d5b04f781beea	0	2	支持	8	13		19	19	的可能性降低
 NetworkUpgrade	network_EVIDENCE_REMOVAL_desc	0517b8aa045f883d	16	17	毀
 NetworkUpgrade	network_GUTTERFLOW_TAP_desc	6c194d59928fb4ba	9	10	
 NetworkUpgrade	network_RUSTWATER_TAP_desc	899ffc566e99fbd0	9	10	
