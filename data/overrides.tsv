@@ -4,6 +4,7 @@ Dialogue	dialog_georgio3_done_1	4c8e9a22197339a3	0	1	再
 Dialogue	dialog_georgio4_done_2	3d675c1dbb7554fc	0	1	存
 Dialogue	dialog_georgio_nuclear_2	dc0e556cda86c343	9	10	忘
 Dialogue	dialog_georgio_nuclear_4	c42c241c31b0feff	4	5	啦
+Dialogue	dialog_georgio_loan_1	b25d6e0e66835b6f	0	4	找到你了
 Dialogue	dialog_georgio_loan_3	d107212b14abab0b	7	10	太空
 Dialogue	dialog_lun_visit_3	9429d6815e2512ee	5	7	便當
 Dialogue	dialog_lun_visit_accept	be9956fa76643838	0	1	好
