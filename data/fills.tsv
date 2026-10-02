@@ -77,6 +77,6 @@ PerkTable	perk_debt_name	負債
 PerkTable	perk_debt_desc	開局額外獲得200信用點。	
 PerkTable	perk_experienced_chemist_name	資深化學家	
 PerkTable	perk_experienced_chemist_desc	你能看到任何容器中目前內容物的精確總體積。	
-UI	ui_rep_notifier	你的店鋪在{1}的名聲{0}	
+UI	ui_rep_notifier	你的店鋪在{1}的聲望{0}	
 UI	ui_cliente_random_customer		UI/ui_clientele_random_customer
 UI	lottery_match2	中2個	
