@@ -237,6 +237,7 @@ Dialogue	dialog_sec_wanted_intro2_8	da8f4deeb5d12407	2	4	當班平	5	6
 Dialogue	dialog_deal_accepted_10	af465720311d3c5e	0	4	講好
 Dialogue	dialog_info_ice_miner_2	d0395e59c291bcc6	0	2	再過	6	7	
 Dialogue	dialog_minor_sick_lowers_1	9f7b07364300be6a	7	9	冷顫
+Dialogue	dialog_janitor_ue_8	fe5ad8106be5bc13	17	19	換
 Item	item_trigger_group_desc	634749a731ff88f7	19	20	扣
 Item	item_compensator_desc	7d3f342d856e866a	7	8	透
 Item	item_stock_desc	27994f0175cb17f0	1	2	用於
@@ -379,6 +380,7 @@ Mechanic	mech_toolbox_tooltip_slots	139e5d21b4736523	3	5	格數
 Mechanic	mech_gun_tag_special1	2e9cda907201656d	2	2	插	3	4	
 Mechanic	mech_gun_tag_special2	ad279bcaff183d04	2	2	插	3	4	
 Mechanic	mech_gun_tag_special3	31845fe277b425e8	2	2	插	3	4	
+Mechanic	response_afterhours_select_backpack	c884c828f00dc83d	0	1		2	2	擇
 NewGame	fence_gear5	0e486e24078ef708	15	17	使用
 NewGame	gunsmith_body	7078053844be4136	76	77	透	78	79	為
 NewGame	welcome_main	0fd371dc48b73daf	121	123	申請房	124	125	
@@ -449,6 +451,8 @@ UI	book_ribwich_section3_body2	9a471e7f424b6dad	17	17	沒有	23	25		26	26	編號
 UI	book_ribwich_section6_body	760f585ca7a197d6	17	17	果沒有	19	21		22	22	標誌
 UI	book_ribwich_section7_body	6672b2b397ddf413	26	26	果沒有	28	30		31	31	貼紙
 UI	ui_delete_save	71257816bc50a3a1	5	10	這個
+UI	ui_rep_gained	7da3df94aff8a13d	4	7	在	11	12		13	13	望提升了
+UI	ui_rep_lost	0458f874e2ac1d7e	4	7	在	11	12		13	13	望下降了
 RepPerkTable	rep_perk_SEC_ALARM_IGNORED_flavor	f2208254c0dbda01	13	14	抑
 RepPerkTable	rep_perk_BM_UNINSURABLE_name	2d3df1340205f431	2	3	投
 RepPerkTable	rep_perk_REV_BLACKLISTED_flavor	5f351c6485a90195	8	9	出
