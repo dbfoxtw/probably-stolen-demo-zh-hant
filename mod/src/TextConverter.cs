@@ -117,10 +117,13 @@ namespace ProbablyStolenZhHant
                 // 短詞（名稱、狀態等）：整句查不到時用來分詞，處理遊戲自己拼接的字串
                 if (kv.Key.Length >= 2 && kv.Key.Length <= 12 && !PhraseExclude.IsMatch(kv.Key))
                 {
+                    // 「退出」「配置」「支付」這類原文也是正常的繁中詞、會出現在別的譯文裡，換掉會誤傷，所以只收譯文裡沒出現過的。
+                    // 含簡體字的字串分詞時也一樣：行事曆的「支付」譯為「房貸」，不能把「[支付租金（…）]」拆成「房貸租金」
+                    bool plain = !c.NeedsConversion(kv.Key);
+                    if (plain && allOut.IndexOf(kv.Key, StringComparison.Ordinal) >= 0) continue;
                     AddByFirstChar(c._phrases, kv.Key, kv.Value);
                     c.PhraseCount++;
-                    // 「退出」「配置」這類原文也是正常的繁中詞、會出現在別的譯文裡，換掉會誤傷，所以只收譯文裡沒出現過的
-                    if (!c.NeedsConversion(kv.Key) && allOut.IndexOf(kv.Key, StringComparison.Ordinal) < 0)
+                    if (plain)
                     {
                         AddByFirstChar(c._plainPhrases, kv.Key, kv.Value);
                         c.PlainPhraseCount++;
