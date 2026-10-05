@@ -50,17 +50,23 @@ namespace ProbablyStolenZhHant
                     $"缺翻補譯文 {Tr.Fills.Count} 條＋參照字串表 {Tr.FillRefCount} 條、補佔位符 {Tr.ArgCount} 條（{sw.ElapsedMilliseconds} ms）{(_debug ? "；除錯模式" : "")}");
 
             var prefix = new HarmonyMethod(typeof(ZhHantMod).GetMethod(nameof(FirstArgPrefix), BindingFlags.Static | BindingFlags.NonPublic));
+            var recordPrefix = new HarmonyMethod(typeof(ZhHantMod).GetMethod(nameof(TmpSetPrefix), BindingFlags.Static | BindingFlags.NonPublic));
             int patched = 0;
-            HarmonyInstance.Patch(AccessTools.PropertySetter(typeof(TMP_Text), nameof(TMP_Text.text)), prefix);
+            HarmonyInstance.Patch(AccessTools.PropertySetter(typeof(TMP_Text), nameof(TMP_Text.text)), recordPrefix);
             patched++;
             foreach (var m in typeof(TMP_Text).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
                 var ps = m.GetParameters();
                 if (m.Name != "SetText" || ps.Length == 0 || ps[0].ParameterType != typeof(string)) continue;
-                HarmonyInstance.Patch(m, prefix);
+                // SetText(string) 與 SetText(string, bool) 顯示的就是這段文字，記下原文；帶數字參數的是格式字串，顯示的是代入後的結果，不記
+                bool plain = ps.Length == 1 || (ps.Length == 2 && ps[1].ParameterType == typeof(bool));
+                HarmonyInstance.Patch(m, plain ? recordPrefix : prefix);
                 patched++;
             }
-            Log.Msg($"已攔截 TMP_Text 的 {patched} 個文字設定方法");
+            // 讀取時換回原文：其他 mod 讀回畫面文字再比對、接字（Enhanced Trade Display），不能讓它讀到繁體
+            HarmonyInstance.Patch(AccessTools.PropertyGetter(typeof(TMP_Text), nameof(TMP_Text.text)),
+                postfix: new HarmonyMethod(typeof(ZhHantMod).GetMethod(nameof(TmpGetPostfix), BindingFlags.Static | BindingFlags.NonPublic)));
+            Log.Msg($"已攔截 TMP_Text 的 {patched} 個文字設定方法與讀取");
 
             // Text Animator 會記住自己設給 TMP 的文字，每幀比對；只在 TMP 層轉換會被當成「外部改了文字」，
             // 打字機效果就直接整段顯示。所以在它解析文字的入口先轉好，讓它記住的就是繁體。
@@ -105,6 +111,39 @@ namespace ProbablyStolenZhHant
             catch (Exception e) { Log.Error($"轉換失敗：{e.Message}"); }
         }
 
+        /// <summary>畫面上的轉換結果 → 原文，讀取文字時換回原文（見 ShownText）。</summary>
+        internal static readonly ShownText Shown = new ShownText();
+        /// <summary>mod 自己掃畫面時要讀到畫面上實際的文字，不換回原文。</summary>
+        static bool _rawRead;
+
+        /// <summary>TMP 設定文字：轉換並記下原文。</summary>
+        static void TmpSetPrefix(TMP_Text __instance, ref string __0)
+        {
+            try
+            {
+                var original = __0;
+                __0 = Conv.Convert(original);
+                Shown.Record(__instance.Pointer.ToInt64(), original, __0);
+            }
+            catch (Exception e) { Log.Error($"轉換失敗：{e.Message}"); }
+        }
+
+        /// <summary>TMP 讀取文字：讀到的是轉換結果就換回原文。</summary>
+        static void TmpGetPostfix(TMP_Text __instance, ref string __result)
+        {
+            if (_rawRead) return;
+            try { __result = Shown.Restore(__instance.Pointer.ToInt64(), __result); }
+            catch (Exception e) { Log.Error($"讀取時還原原文失敗：{e.Message}"); }
+        }
+
+        /// <summary>讀畫面上實際顯示的文字（不換回原文）。</summary>
+        static string RawText(TMP_Text t)
+        {
+            _rawRead = true;
+            try { return t.text; }
+            finally { _rawRead = false; }
+        }
+
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
             EnsureFontFallback();
@@ -115,11 +154,11 @@ namespace ProbablyStolenZhHant
             int changed = 0;
             foreach (var t in Resources.FindObjectsOfTypeAll<TMP_Text>())
             {
-                var s = t.text;
+                var s = RawText(t);
                 if (string.IsNullOrEmpty(s)) continue;
                 var r = Conv.Convert(s);
                 if (r == s) continue;
-                t.text = r;
+                t.text = s; // 設回原文，由攔截轉換並記下原文（讀取時才換得回來）
                 changed++;
             }
             Log.Msg($"場景 {sceneName}：轉換 {changed} 個既有文字物件{(_tables == TableState.Done ? "" : "（字串表還沒載入，用暫用轉換器）")}");
@@ -220,7 +259,7 @@ namespace ProbablyStolenZhHant
             int refreshed = 0;
             foreach (var t in Resources.FindObjectsOfTypeAll<TMP_Text>())
             {
-                var s = t.text;
+                var s = RawText(t);
                 if (string.IsNullOrEmpty(s) || !early.Produced.TryGetValue(s, out var orig) || conv.Convert(orig) == s) continue;
                 t.text = orig;
                 refreshed++;
@@ -379,7 +418,8 @@ namespace ProbablyStolenZhHant
 
         void Report()
         {
-            Log.Msg(Conv.Stats() + $"；缺翻補譯文 {MissingTranslations.FillHits}、改用英文 {MissingTranslations.EnglishHits}、補佔位符 {MissingTranslations.ArgHits}");
+            Log.Msg(Conv.Stats() + $"；缺翻補譯文 {MissingTranslations.FillHits}、改用英文 {MissingTranslations.EnglishHits}、補佔位符 {MissingTranslations.ArgHits}；" +
+                    $"讀取文字 {Shown.Reads} 次、換回原文 {Shown.Restored} 次（紀錄 {Shown.Count} 筆、清空 {Shown.Clears} 次）");
             if (!_debug || _tables != TableState.Done) return; // 暫用轉換器的後備轉換不代表正式版會漏掉
             try { Conv.WriteMisses(Path.Combine(_dataDir, "misses.tsv")); }
             catch (Exception e) { Log.Warning($"寫入 misses.tsv 失敗：{e.Message}"); }
