@@ -16,3 +16,41 @@ Officer	^Security Officer$	=ClientName/name_security_officer
 # 刪除存檔等確認對話框的按鈕（寫死在介面上；字串表的 MainMenu/yes、no 是「是／否」，這裡一致）
 Yes	^Yes$	是
 No	^No$	否
+
+# 以下是 2026-10-07 掃遊戲程式碼找到的台詞與通知，括號是使用它的類別與方法。
+# 台詞可能出現在對話泡泡或錄音機的「名字: 台詞」裡，所以不錨定整行；規則依序套用，長句要排在短句前面。
+
+# 顧客拒絕買水（WaterHelper.GetReactionString；字串表另有一組 water_wrong_*，口氣照那組）
+crazy? I am not drinking	Are you crazy\? I am not drinking this!	你瘋了嗎？我才不喝這個！
+do you want to kill me	I am not drinking this, do you want to kill me\?	我才不喝這個，你想害死我嗎？
+I am not drinking this	I am not drinking this(?![,!])	我才不喝這個
+risk it with Ghostwater	I rather not risk it with Ghostwater\.	幽靈水我可不想冒險。
+
+# 顧客發現彈藥盒裝錯（AmmoBoxHelper）；口徑、彈藥照字串表
+This ammo box isn't right	Hey, what's this\? This ammo box isn't right\.	喂，這是怎樣？這盒彈藥不對勁。
+What's with this ammo	Is this some kind of joke\? What's with this ammo\?	開什麼玩笑？這彈藥是怎麼回事？
+Something's off with this ammo	Something's off with this ammo\.	這彈藥怪怪的。
+What did you pack in here	I'm not stupid\. What did you pack in here\?	我又不笨。你在裡面裝了什麼？
+trying to scam me	Are you trying to scam me\?	你當我好騙嗎？
+wrong caliber	You packed this with the wrong caliber!	你裝錯口徑了！
+not a full ammo box	This is not a full ammo box!	這盒彈藥根本沒裝滿！
+wrong type of ammo	You packed this with the wrong type of ammo!	你裝錯彈藥種類了！
+
+# 玩家指出耐久度和標示不同（DurabilityHelper.GetExposeDialog；英文原文前兩句沒有句號）
+durability is actually higher	The thing's durability is actually higher	這東西的耐久度其實比較高
+Thank you for being honest	Really\? Thank you for being honest\.	真的嗎？謝謝你這麼老實。
+durability is actually lower	The thing's durability is actually lower	這東西的耐久度其實比較低
+i'll drop the price	Okay, i'll drop the price\.	好吧，我降價。
+
+# 好運／霉運的通知：彩券開獎、翻垃圾堆、刮刮樂（符號照字串表）、盤查
+during the lottery draw	Your luck was on your side during the lottery draw\.	開獎時，好運站在你這邊。
+weighed on the lottery draw	Your bad luck weighed on the lottery draw\.	你的霉運拖累了這次開獎。
+You dig through the pile	Your bad luck strikes\. You dig through the pile and find nothing\.	霉運上門。你翻遍了整堆，什麼也沒找到。
+saved you from an injury	Your luck saved you from an injury!	多虧好運，你沒有受傷！
+this symbol against you	Your bad luck changed this symbol against you\.	霉運讓這個符號變成對你不利。
+this symbol in your favor	Your luck changed this symbol in your favor!	好運讓這個符號變成對你有利！
+overlooked your illegal goods	Your luck saved you! The officer overlooked your illegal goods\.	好運救了你！警官沒發現你的違禁品。
+
+# 垃圾堆的滑鼠提示（MachineryHelper.CreateTrashPileTooltip；第二句英文沒有句號）
+energy to search it today	I have the energy to search it today\.	今天還有力氣翻一翻。
+too tired to search it again	I am too tired to search it again today	今天太累了，沒力氣再翻了
