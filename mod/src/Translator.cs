@@ -27,7 +27,7 @@ namespace ProbablyStolenZhHant
         public readonly Dictionary<string, string> Fills = new Dictionary<string, string>(StringComparer.Ordinal);
 
         /// <summary>
-        /// 原文漏了英文有的佔位符（「换取：」少了 {0}）的條目：表/key → 補上佔位符的譯文。
+        /// 原文漏了英文有的佔位符（例如以物易物的提示少了 {0}）的條目：表/key → 補上佔位符的譯文。
         /// 只在畫面顯示時轉換的話，遊戲已經代入完參數，參數早就丟了；所以由 MissingTranslations 在字串表產生字串時代入。
         /// 這條的逐條修正生效（原文雜湊相符）才放進來，遊戲更新改了原文就不套用。
         /// </summary>

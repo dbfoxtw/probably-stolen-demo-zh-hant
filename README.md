@@ -6,7 +6,7 @@
 
 下載：[Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280)，或本 repo 的 [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases)。版本紀錄見 [CHANGELOG.md](CHANGELOG.md)。
 
-翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報（[Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues)，或 [Nexus 頁面](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs)的 Bugs 分頁）。
+簡繁轉換用 OpenCC；台灣用語的潤稿、缺翻補譯和程式都是用 AI（Claude）做的。如果有翻不順的地方歡迎回報。這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報（[Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues)，或 [Nexus 頁面](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs)的 Bugs 分頁）。
 
 > Unofficial Traditional Chinese (Taiwan) display mod for *Probably Stolen* (Demo), built on MelonLoader. See [English](#english) below.
 
@@ -48,7 +48,7 @@
 - **簡中缺翻的條目**：原版會顯示「Translation Error」，mod 會補上譯文；沒有譯文時改顯示遊戲的英文。
 - **簡中漏了佔位符的條目**：例如以物易物的「換取：」，原版後面不顯示物品。遊戲代入參數時，mod 改用補上佔位符的譯文。
 
-## 這個 repo 不含遊戲內容
+## 這個 repo 不含遊戲檔與字串表
 
 依遊戲社群的 mod 規範，這個 repo 與發布檔都不附遊戲的字串表或其他素材。`data/` 只有翻譯規則：
 
@@ -58,7 +58,7 @@
 | `overrides.tsv` | 逐條修正：只存我們改動的片段與位置。自動轉換的結果和製作時不同（例如遊戲更新改了原文）時，這條修正會自動停用 |
 | `fills.tsv` | 簡中缺翻的條目：我們的譯文，或參照字串表裡另一條的譯文。沒有這個檔時，缺翻的條目改顯示遊戲的英文 |
 | `args.tsv` | 簡中漏了英文有的佔位符的少數條目（例如以物易物的「換取：」後面沒有物品）：補上佔位符的譯文，遊戲代入參數時改用 |
-| `hardcoded.tsv` | 寫死在遊戲程式裡的少數英文（例如借據）的翻譯規則，只在中文模式套用 |
+| `hardcoded.tsv` | 寫死在遊戲程式裡、字串表沒有的少數英文（例如借據）的翻譯規則，只在中文模式套用。為了比對，規則裡保留了英文原句 |
 | `tables.txt` | 要讀取的字串表名稱 |
 
 OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`）。
@@ -84,6 +84,7 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 
 - 其他翻譯 mod。
 - 同樣修改 TextMeshPro 文字或字型的 mod。
+- Enhanced Trade Display v1.2.0 已確認可以一起用（本 mod v1.1.4 起；更早的版本交易面板的文字會亂跳）。
 - 其他 mod 顯示的簡體文字也會自動轉成繁體（OpenCC＋術語表），但沒有逐條潤稿；不是用 TextMeshPro 顯示的文字不會轉換。
 
 ## 授權
@@ -100,7 +101,7 @@ OpenCC 字典在建置時由 Python 套件產生（見 `tools/build_mod_data.py`
 
 An unofficial mod that shows *Probably Stolen*'s Simplified Chinese text in Traditional Chinese (Taiwan). Supported game version: DEMO Version 049-REV5-L. Download from [Nexus Mods](https://www.nexusmods.com/probablystolen/mods/280) or this repository's [Releases](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/releases).
 
-The translation was proofread with AI. If any line reads awkwardly, please report it. This mod has not been thoroughly tested yet, so bug reports are welcome too, via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the [Nexus page](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs).
+The Simplified-to-Traditional conversion uses OpenCC; the Taiwan-usage proofreading, the translations for lines missing from the Simplified Chinese table, and the code were all made with AI (Claude). If any line reads awkwardly, please report it. This mod has not been thoroughly tested yet, so bug reports are welcome too, via [Issues](https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues) or the Bugs tab on the [Nexus page](https://www.nexusmods.com/probablystolen/mods/280?tab=bugs).
 
 **Install**
 
@@ -113,10 +114,10 @@ Find the game folder: in your Steam library, right-click Probably Stolen → Man
 
 **Uninstall:** delete `Mods\ProbablyStolenZhHant.dll` and the `UserData\ZhHant` folder.
 
-**Known conflicts:** other translation mods, and mods that change TextMeshPro text or fonts. Simplified Chinese text from other mods is also converted automatically, without per-line proofreading; text not displayed through TextMeshPro is left as is.
+**Known conflicts:** other translation mods, and mods that change TextMeshPro text or fonts. Simplified Chinese text from other mods is also converted automatically, without per-line proofreading; text not displayed through TextMeshPro is left as is. Enhanced Trade Display v1.2.0 is confirmed compatible (from v1.1.4 of this mod; earlier versions made the trade panel text jitter).
 
 - **Display-only.** Text is converted right before TextMeshPro displays it. Game files, string tables, and saves are never modified, and removing the mod restores the original Simplified Chinese.
-- **No game content is included.** The mod reads the game's own Simplified Chinese string tables at runtime and converts each entry with OpenCC (s2tw), a glossary, and per-entry corrections. The corrections are stored only as changed fragments and positions. Entries missing from the Simplified Chinese table get our translation, or fall back to the game's English text.
+- **No game files or string tables are included.** The mod reads the game's own Simplified Chinese string tables at runtime and converts each entry with OpenCC (s2tw), a glossary, and per-entry corrections. The corrections are stored only as changed fragments and positions. Entries missing from the Simplified Chinese table get our translation, or fall back to the game's English text. A few English lines hard-coded in the game (not in any string table) are kept verbatim in the rules (`hardcoded.tsv`) for matching.
 - The game is a Unity IL2CPP build; the mod hooks it through MelonLoader (Il2CppInterop, Harmony).
 - Handwritten text (signatures and notes) uses Yuji Syuku, a brush font close to the original, with the few missing Traditional Chinese glyphs added (SIL OFL 1.1).
 - Build from source (developers only): install MelonLoader 0.7.3, start the game once, then run `install.bat` (requires Python 3.10+ and the .NET SDK 6+).

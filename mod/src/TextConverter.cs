@@ -22,12 +22,12 @@ namespace ProbablyStolenZhHant
         readonly HashSet<string> _keyPrefixes = new HashSet<string>(StringComparer.Ordinal);
         readonly List<Template> _templates = new List<Template>();
         readonly List<Template> _plainTemplates = new List<Template>(); // 字面沒有簡體專用字的樣板，見 ConvertCore
-        // 沒有簡體專用字、譯文卻不同的短詞（「[未激活]」「休班警官」「彩票」）：不用轉的文字裡也要換掉，見 ReplacePlainPhrases
+        // 沒有簡體專用字、譯文卻不同的短詞（例如聲望特性的狀態標籤、某些職稱）：不用轉的文字裡也要換掉，見 ReplacePlainPhrases
         readonly Dictionary<char, List<KeyValuePair<string, string>>> _plainPhrases = new Dictionary<char, List<KeyValuePair<string, string>>>();
         readonly Dictionary<char, List<KeyValuePair<string, string>>> _phrases = new Dictionary<char, List<KeyValuePair<string, string>>>();
         readonly bool[] _trigger = new bool[char.MaxValue + 1];
         readonly Dictionary<string, string> _cache = new Dictionary<string, string>(StringComparer.Ordinal);
-        readonly HashSet<string> _unchanged = new HashSet<string>(StringComparer.Ordinal); // 轉換前後相同的短字串（例如「胡安」），認說話者用
+        readonly HashSet<string> _unchanged = new HashSet<string>(StringComparer.Ordinal); // 轉換前後相同的短字串（例如沒有簡體專用字的人名），認說話者用
 
         TextConverter(Translator tr) { _tr = tr; }
 
@@ -118,7 +118,7 @@ namespace ProbablyStolenZhHant
                 if (kv.Key.Length >= 2 && kv.Key.Length <= 12 && !PhraseExclude.IsMatch(kv.Key))
                 {
                     // 「退出」「配置」「支付」這類原文也是正常的繁中詞、會出現在別的譯文裡，換掉會誤傷，所以只收譯文裡沒出現過的。
-                    // 含簡體字的字串分詞時也一樣：行事曆的「支付」譯為「房貸」，不能把「[支付租金（…）]」拆成「房貸租金」
+                    // 含簡體字的字串分詞時也一樣：行事曆上的某個短詞有專用譯文，同一個詞出現在別的句子裡時不能跟著換掉
                     bool plain = !c.NeedsConversion(kv.Key);
                     if (plain && allOut.IndexOf(kv.Key, StringComparison.Ordinal) >= 0) continue;
                     AddByFirstChar(c._phrases, kv.Key, kv.Value);
@@ -154,7 +154,7 @@ namespace ProbablyStolenZhHant
                     c._templates.Add(t);
             // 字面部分越長的樣板越具體，先比對（避免「…{0}…」把別的樣板的字面也吃進佔位符）
             c._templates.Sort((a, b) => b.LiteralLength.CompareTo(a.LiteralLength));
-            // 字面沒有簡體專用字、套用後字面卻會變的樣板（「你下周的租金是{0}。」→「下週」、「槽位{0}」→「欄位」）另外列出，
+            // 字面沒有簡體專用字、套用後字面卻會變的樣板（例如含「下周」「槽位」，套用後變成「下週」「欄位」）另外列出，
             // 不用轉的字串也要比對。只收字面會變的，所以單邊的樣板套上去也只是換掉那個詞，不怕寬鬆
             foreach (var t in c._templates)
                 if (!c.NeedsConversion(t.Literal) && !t.KeepsLiteral) c._plainTemplates.Add(t);
@@ -183,7 +183,7 @@ namespace ProbablyStolenZhHant
                 if (ChineseActive && _hardcoded.Count > 0 && ApplyHardcoded(s) is string h) { HardcodedHits++; return h; }
                 if (!NeedsConversion(s))
                 {
-                    // 樣板的字面沒有簡體專用字、填入的又是數字時，整句也沒有（「你下周的租金是{0}。」），仍要套樣板
+                    // 樣板的字面沒有簡體專用字、填入的又是數字時，整句也沒有（例如房東說下週租金那句），仍要套樣板
                     foreach (var t in _plainTemplates)
                         if ((r = t.Apply(s, Convert)) != null) { TemplateHits++; return r; }
                     if ((r = ReplacePlainPhrases(s)) != null) { FallbackHits++; return r; }
@@ -264,7 +264,7 @@ namespace ProbablyStolenZhHant
             {
                 if (!NeedsConversion(tokens[units[u]]))
                 {
-                    // 沒有簡體專用字的片段：整句查得到，或含有譯文不同的短詞（聲望特性標題的「[未激活]」→「[未啟用]」）
+                    // 沒有簡體專用字的片段：整句查得到，或含有譯文不同的短詞（例如聲望特性標題的狀態標籤）
                     var ex = LookupFlexible(tokens[units[u]], templates: false) ?? ReplacePlainPhrases(tokens[units[u]]);
                     if (ex != null) tokens[units[u]] = ex;
                     continue;
@@ -341,8 +341,8 @@ namespace ProbablyStolenZhHant
         const int MaxSpeaker = 20;
 
         /// <summary>
-        /// 錄音機的對話紀錄是「說話者: 台詞」一行。整行查不到整句對照，會走後備轉換而套不到逐條修正（例如「妥了。」）；
-        /// 名字若沒有簡體專用字（「游客」），整行還可能被當成不用轉。所以說話者是字串表裡的整句（或寫死英文的
+        /// 錄音機的對話紀錄是「說話者: 台詞」一行。整行查不到整句對照，會走後備轉換而套不到逐條修正（例如短的回應句）；
+        /// 名字若沒有簡體專用字（例如某些顧客類別），整行還可能被當成不用轉。所以說話者是字串表裡的整句（或寫死英文的
         /// 「Player」）時，名字查整句、台詞當成獨立的一句轉換。字串表的原文沒有「短字串: 」開頭的，不會誤拆。
         /// </summary>
         string TrySpeaker(string s)
@@ -366,7 +366,7 @@ namespace ProbablyStolenZhHant
         bool ParseSpeaker(string s, out int a, out int i, out string n)
         {
             n = null;
-            // 實機的格式是「 导师: …」，開頭有一個空格
+            // 實機的格式是「 名字: 台詞」，開頭有一個空格
             a = 0;
             while (a < s.Length && char.IsWhiteSpace(s[a])) a++;
             i = s.IndexOf(SpeakerSep, a, StringComparison.Ordinal);
@@ -414,7 +414,7 @@ namespace ProbablyStolenZhHant
         }
 
         /// <summary>
-        /// 沒有簡體專用字的文字裡，換掉「沒有簡體專用字、譯文卻不同」的短詞（「[未激活]」「休班警官」）；一個都沒有時傳回 null。
+        /// 沒有簡體專用字的文字裡，換掉「沒有簡體專用字、譯文卻不同」的短詞（例如狀態標籤、某些職稱）；一個都沒有時傳回 null。
         /// 這些詞在繁中譯文裡不會出現（出現了就是還沒轉），所以已轉好的文字不受影響（離線驗證的「譯文不會被重複轉換」把關）。
         /// </summary>
         string ReplacePlainPhrases(string s)

@@ -4,7 +4,7 @@ Probably Stolen 繁體中文化 mod（非官方） v{version}
 把遊戲內建的簡體中文，在顯示時轉成繁體中文（台灣用語）。非官方製作。
 對應遊戲版本：DEMO Version 049-REV5-L
 
-翻譯是用 AI 校正的，如果有翻不順的地方歡迎回報。
+簡繁轉換用 OpenCC；台灣用語的潤稿、缺翻補譯和程式都是用 AI（Claude）做的。如果有翻不順的地方歡迎回報。
 這個 mod 還沒有做詳細測試，如果有任何 bug 也歡迎回報
 （https://www.nexusmods.com/probablystolen/mods/280?tab=bugs
  或 https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues）。
@@ -30,7 +30,7 @@ MelonLoader 本身要另外移除：刪除 version.dll、MelonLoader、Mods、Pl
 - 只在顯示時轉換：不修改遊戲檔、字串表與存檔。拔掉 mod 就回到原版簡中，存檔可以直接沿用。
 - 簡中缺翻的條目（原版會顯示 Translation Error）會補上譯文。
 - 簽名、紙條等手寫文字，改用書法家片岡佑之的毛筆字型「佑字 肅」（Yuji Syuku），並補上它缺的繁體字，風格接近原版。
-- 已知衝突：其他翻譯 mod，以及同樣修改 TextMeshPro 文字或字型的 mod。
+- 已知衝突：其他翻譯 mod，以及同樣修改 TextMeshPro 文字或字型的 mod。Enhanced Trade Display v1.2.0 已確認可以一起用（本 mod v1.1.4 起；更早的版本交易面板的文字會亂跳）。
 - 其他 mod 顯示的簡體文字也會自動轉成繁體，但沒有逐條潤稿；不是用 TextMeshPro 顯示的文字不會轉換。
 - 遊戲更新後如果有新的文字，仍會自動轉成繁體；只是潤稿修正過的句子，原文變了就會改回自動轉換。
 
@@ -50,7 +50,7 @@ Probably Stolen Traditional Chinese mod (unofficial) v{version}
 Shows the game's Simplified Chinese text in Traditional Chinese (Taiwan). Unofficial.
 Supported game version: DEMO Version 049-REV5-L
 
-The translation was proofread with AI. If any line reads awkwardly, please report it.
+The Simplified-to-Traditional conversion uses OpenCC; the Taiwan-usage proofreading, the translations for lines missing from the Simplified Chinese table, and the code were all made with AI (Claude). If any line reads awkwardly, please report it.
 This mod has not been thoroughly tested yet. Bug reports are welcome too
 (https://www.nexusmods.com/probablystolen/mods/280?tab=bugs
  or https://github.com/dbfoxtw/probably-stolen-demo-zh-hant/issues).
@@ -75,7 +75,7 @@ Delete Mods\ProbablyStolenZhHant.dll and the UserData\ZhHant folder.
 
 Notes
 - Display-only: game files, string tables, and saves are never modified. Saves work with or without the mod.
-- Known conflicts: other translation mods, and mods that change TextMeshPro text or fonts.
+- Known conflicts: other translation mods, and mods that change TextMeshPro text or fonts. Enhanced Trade Display v1.2.0 is confirmed compatible (from v1.1.4 of this mod; earlier versions made the trade panel text jitter).
 - Simplified Chinese text from other mods is also converted to Traditional Chinese automatically, without per-line proofreading.
   Text not displayed through TextMeshPro is left as is.
 
