@@ -12,26 +12,21 @@ r"""打包發布用的壓縮檔（Nexus Mods）。玩家把壓縮檔解壓到遊
 from __future__ import annotations
 
 import argparse
-import re
 import shutil
 import sys
-import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_mod_data  # noqa: E402
 import install  # noqa: E402
+import modkit  # noqa: E402  install 已經把共用的 modkit.py 加進搜尋路徑
 
 ROOT = Path(__file__).resolve().parents[1]  # mod/、data/、build/ 所在的 repo 根目錄
 HERE = Path(__file__).resolve().parents[1]  # 打包範本（package/README.txt、LICENSE）所在的資料夾
 
 
 def mod_version() -> str:
-    src = (ROOT / "mod" / "src" / "ZhHantMod.cs").read_text(encoding="utf-8")
-    m = re.search(r'MelonInfo\(.*?"(\d+\.\d+\.\d+)"', src)
-    if not m:
-        raise SystemExit("讀不到 mod 版本（ZhHantMod.cs 的 MelonInfo）")
-    return m.group(1)
+    return modkit.mod_version(ROOT / "mod" / "src" / "ZhHantMod.cs")
 
 
 def assemble(data: Path, dll: Path, font: Path | None, font_license: Path | None, out_dir: Path) -> Path:
@@ -39,10 +34,8 @@ def assemble(data: Path, dll: Path, font: Path | None, font_license: Path | None
     if font and not (font_license and font_license.is_file()):
         raise SystemExit(f"附上手寫字型 {font.name} 時，要一併附上它的授權檔（--font-license）")
     version = mod_version()
-    stage = ROOT / "build" / "package"
-    if stage.exists():
-        shutil.rmtree(stage)
-    (stage / "Mods").mkdir(parents=True)
+    stage = modkit.new_stage(ROOT)
+    (stage / "Mods").mkdir()
     shutil.copy2(dll, stage / "Mods" / dll.name)
     z = stage / "UserData" / "ZhHant"
     z.mkdir(parents=True)
@@ -53,21 +46,9 @@ def assemble(data: Path, dll: Path, font: Path | None, font_license: Path | None
     if font:
         shutil.copy2(font, z / f"handwritten{font.suffix.lower()}")
         shutil.copy2(font_license, z / "handwritten-font-LICENSE.txt")
-    readme = (HERE / "package" / "README.txt").read_text(encoding="utf-8").replace("{version}", version)
-    (z / "README.txt").write_text(readme, encoding="utf-8", newline="\r\n")
-    (z / "LICENSE.txt").write_text((HERE / "LICENSE").read_text(encoding="utf-8"), encoding="utf-8", newline="\r\n")
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out = out_dir / f"ProbablyStolen-ZhHant-{version}.zip"
-    out.unlink(missing_ok=True)
-    files = sorted(p for p in stage.rglob("*") if p.is_file())
-    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-        for p in files:
-            zf.write(p, p.relative_to(stage).as_posix())
-    print(f"已打包 {len(files)} 個檔案（{out.stat().st_size / 1e6:.1f} MB）：{out}")
-    for p in files:
-        print(f"  {p.relative_to(stage).as_posix()}")
-    return out
+    modkit.write_text_crlf(HERE / "package" / "README.txt", z / "README.txt", version)
+    modkit.write_text_crlf(HERE / "LICENSE", z / "LICENSE.txt")
+    return modkit.write_zip(stage, out_dir / f"ProbablyStolen-ZhHant-{version}.zip")
 
 
 def main() -> None:

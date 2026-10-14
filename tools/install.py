@@ -11,87 +11,39 @@ r"""從原始碼建置 mod 並安裝到遊戲。
   python tools/install.py uninstall    移除 mod（MelonLoader 本身不動）
 都可加 --game "遊戲資料夾"；install 可加 --font 手寫字型.ttf（支援繁體的手寫字型，取代遊戲的簡體手寫字型），
 以及 --debug（記錄後備轉換到 UserData\ZhHant\misses.tsv、每分鐘統計、缺翻自我測試）。
+找遊戲資料夾、編譯的做法在共用的 modkit.py（Probably Stolen 的 mod 都用同一份），這裡只寫翻譯資料與字型的安裝。
 """
 from __future__ import annotations
 
 import argparse
-import os
-import re
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+# 共用的 modkit.py：公開 repo 裡和這個檔放在一起，私人 monorepo 裡在根目錄的 tools/
+sys.path.insert(0, str(next((d for d in (HERE, *(p / "tools" for p in HERE.parents)) if (d / "modkit.py").is_file()), HERE)))
 import build_mod_data  # noqa: E402
+import modkit  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[1]
-APP_ID = "4349200"
-EXE_NAME = "Probably Stolen.exe"
+ROOT = HERE.parent
 DATA_OUT = ROOT / "build" / "mod-data"
 DLL = ROOT / "mod" / "bin" / "Release" / "ProbablyStolenZhHant.dll"
 OLD_FILES = ["exact.tsv", "phrases.tsv", "chars.tsv"]  # 舊版的資料檔，安裝時刪除
 
-
-def _steam_library_dirs() -> list[Path]:
-    roots: list[Path] = []
-    try:
-        import winreg
-
-        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam") as k:
-            roots.append(Path(winreg.QueryValueEx(k, "SteamPath")[0]))
-    except OSError:
-        pass
-    roots.append(Path(r"C:\Program Files (x86)\Steam"))
-    libs: list[Path] = []
-    for root in roots:
-        vdf = root / "steamapps" / "libraryfolders.vdf"
-        if not vdf.is_file():
-            continue
-        libs.append(root)
-        for m in re.finditer(r'"path"\s+"([^"]+)"', vdf.read_text(encoding="utf-8", errors="replace")):
-            libs.append(Path(m.group(1).replace("\\\\", "\\")))
-    return libs
-
-
-def find_game_dir(explicit: str | None = None) -> Path:
-    candidates = [Path(explicit)] if explicit else []
-    if os.environ.get("PS_GAME_DIR"):
-        candidates.append(Path(os.environ["PS_GAME_DIR"]))
-    for lib in _steam_library_dirs():
-        acf = lib / "steamapps" / f"appmanifest_{APP_ID}.acf"
-        if acf.is_file():
-            m = re.search(r'"installdir"\s+"([^"]+)"', acf.read_text(encoding="utf-8", errors="replace"))
-            if m:
-                candidates.append(lib / "steamapps" / "common" / m.group(1))
-    for c in candidates:
-        if (c / EXE_NAME).is_file():
-            return c
-    raise SystemExit('找不到遊戲資料夾，請用 --game 指定，例如：--game "D:\\SteamLibrary\\steamapps\\common\\Probably Stolen Demo"')
-
-
-def is_game_running() -> bool:
-    try:
-        out = subprocess.run(["tasklist", "/FI", f"IMAGENAME eq {EXE_NAME}", "/FO", "CSV", "/NH"],
-                             capture_output=True, text=True, errors="replace").stdout
-    except OSError:
-        return False
-    return EXE_NAME.lower() in out.lower()
+find_game_dir = modkit.find_game_dir
+is_game_running = modkit.is_game_running
 
 
 def build_dll(game: Path) -> None:
-    if not (game / "MelonLoader" / "Il2CppAssemblies" / "Unity.TextMeshPro.dll").is_file():
-        raise SystemExit("找不到 MelonLoader\\Il2CppAssemblies：請先安裝 MelonLoader 並啟動一次遊戲。")
-    dotnet = shutil.which("dotnet") or r"C:\Program Files\dotnet\dotnet.exe"
-    subprocess.run([dotnet, "build", str(ROOT / "mod" / "ProbablyStolenZhHant.csproj"), "-c", "Release",
-                    "-nologo", "-v", "q", f"-p:GameDir={game}"], check=True)
-    print(f"建置完成：{DLL}")
+    # 用呼叫當下的 ROOT、DLL：私人 repo 的 tools/mod_poc.py 會把它們改成指向私人 repo
+    modkit.build_dll(ROOT / "mod" / "ProbablyStolenZhHant.csproj", DLL, game, "Unity.TextMeshPro.dll")
 
 
 def install_files(game: Path, data: Path, font: Path | None, debug: bool = False) -> None:
     """把編譯好的 mod 與資料（build_mod_data 的輸出）複製到遊戲。debug：放除錯標記檔。"""
-    if is_game_running():
-        raise SystemExit("遊戲正在執行，請先關閉。")
+    modkit.require_game_closed()
     (game / "Mods").mkdir(exist_ok=True)
     shutil.copy2(DLL, game / "Mods" / DLL.name)
     dest = game / "UserData" / "ZhHant"
@@ -116,8 +68,7 @@ def install_files(game: Path, data: Path, font: Path | None, debug: bool = False
 
 
 def uninstall(game: Path) -> None:
-    if is_game_running():
-        raise SystemExit("遊戲正在執行，請先關閉。")
+    modkit.require_game_closed()
     (game / "Mods" / DLL.name).unlink(missing_ok=True)
     shutil.rmtree(game / "UserData" / "ZhHant", ignore_errors=True)
     print("已移除 mod（MelonLoader 本身仍在；要完全移除請刪除 version.dll、MelonLoader、Mods、Plugins、UserData、UserLibs）。")
