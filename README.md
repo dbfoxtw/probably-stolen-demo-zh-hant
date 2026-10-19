@@ -1,3 +1,7 @@
+> **已搬家**：這個 mod 從 2026-10-19 起放在合併的 repo [dbfoxtw/probably-stolen-mods](https://github.com/dbfoxtw/probably-stolen-mods/tree/main/mods/zh-hant)，新版本、原始碼與問題回報都在那裡。這個 repo 已封存，舊版本的 Releases 仍可下載。
+>
+> **Moved**: since 2026-10-19 this mod lives in the combined repository [dbfoxtw/probably-stolen-mods](https://github.com/dbfoxtw/probably-stolen-mods/tree/main/mods/zh-hant). New releases, source code and issues are there. This repository is archived; old releases can still be downloaded.
+
 # Probably Stolen 繁體中文化 mod（非官方）
 
 *Probably Stolen*（Demo）的繁體中文（台灣用語）顯示 mod，使用 MelonLoader。非官方製作。
