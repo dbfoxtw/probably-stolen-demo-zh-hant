@@ -2,12 +2,6 @@
 # 格式：觸發字串<Tab>正規表示式（.NET）<Tab>替換文字。文字含觸發字串才會跑正規表示式，$1 等是擷取群組。
 # 替換文字寫成「=表/key」時，換成字串表那一條的譯文（例如顧客名稱）。
 
-# 喬治奧的借據（金額由程式填入；英文原文把 owes 拼成 owns）
-I.O.U.	^I\.O\.U\.$	借據
-Georgio owns	Georgio owns the Shopkeeper (\d+) Credit\.	喬治奧欠店主 $1 信用點。
-Georgio will pay	Georgio will pay back with interest\.	喬治奧會連本帶利還清。
--Georgio	^-Georgio$	——喬治奧
-
 # 錄音機裡玩家台詞的說話者（「Player: 台詞」；遊戲其他地方稱玩家為店主）
 Player	^Player$	店主
 # 錄音機裡治安部警官的說話者（射殺改造體後上門、sec_* 台詞），用顧客名稱的譯文
@@ -19,12 +13,6 @@ No	^No$	否
 
 # 以下是 2026-10-07 掃遊戲程式碼找到的台詞與通知，括號是使用它的類別與方法。
 # 台詞可能出現在對話泡泡或錄音機的「名字: 台詞」裡，所以不錨定整行；規則依序套用，長句要排在短句前面。
-
-# 顧客拒絕買水（WaterHelper.GetReactionString；字串表另有一組 water_wrong_*，口氣照那組）
-crazy? I am not drinking	Are you crazy\? I am not drinking this!	你瘋了嗎？我才不喝這個！
-do you want to kill me	I am not drinking this, do you want to kill me\?	我才不喝這個，你想害死我嗎？
-I am not drinking this	I am not drinking this(?![,!])	我才不喝這個
-risk it with Ghostwater	I rather not risk it with Ghostwater\.	幽靈水我可不想冒險。
 
 # 顧客發現彈藥盒裝錯（AmmoBoxHelper）；口徑、彈藥照字串表
 This ammo box isn't right	Hey, what's this\? This ammo box isn't right\.	喂，這是怎樣？這盒彈藥不對勁。
